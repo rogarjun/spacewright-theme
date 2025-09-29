@@ -10,9 +10,9 @@
 {
   "current": {
     "logo_width": 90,
-    "type_header_font": "assistant_n4",
+    "type_header_font": "montserrat_n4",
     "heading_scale": 100,
-    "type_body_font": "assistant_n4",
+    "type_body_font": "lato_n4",
     "body_scale": 100,
     "page_width": 1200,
     "spacing_sections": 0,
@@ -138,12 +138,12 @@
     "color_schemes": {
       "scheme-1": {
         "settings": {
-          "background": "#F9F9F9",
+          "background": "#f9f9f9",
           "background_gradient": "",
-          "text": "#1E2429",
-          "button": "#2C3E50",
+          "text": "#1e2429",
+          "button": "#2c3e50",
           "button_label": "#ffffff",
-          "secondary_button_label": "#1E2429",
+          "secondary_button_label": "#1e2429",
           "shadow": "#121212"
         }
       },
@@ -193,12 +193,12 @@
       },
       "spacewright-default": {
         "settings": {
-          "background": "#F9F9F9",
+          "background": "#f9f9f9",
           "background_gradient": "",
-          "text": "#1E2429",
-          "button": "#2C3E50",
+          "text": "#1e2429",
+          "button": "#2c3e50",
           "button_label": "#ffffff",
-          "secondary_button_label": "#1E2429",
+          "secondary_button_label": "#1e2429",
           "shadow": "#121212"
         }
       }
