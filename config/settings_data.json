@@ -9,16 +9,18 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/logo_png.png",
+    "logo": "shopify://shop_images/Logo_Final_Black_1003.png",
     "logo_width": 60,
-    "type_header_font": "montserrat_n4",
+    "type_header_font": "poppins_n4",
     "heading_scale": 100,
-    "type_body_font": "lato_n4",
+    "type_body_font": "lora_n4",
     "body_scale": 100,
     "page_width": 1200,
     "spacing_sections": 0,
     "spacing_grid_horizontal": 8,
     "spacing_grid_vertical": 8,
+    "animations_reveal_on_scroll": true,
+    "animations_hover_elements": "3d-lift",
     "buttons_border_thickness": 1,
     "buttons_border_opacity": 100,
     "buttons_radius": 0,
@@ -102,8 +104,11 @@
     "drawer_shadow_blur": 5,
     "badge_position": "bottom left",
     "badge_corner_radius": 40,
-    "sale_badge_color_scheme": "scheme-5",
+    "sale_badge_color_scheme": "scheme-4",
     "sold_out_badge_color_scheme": "scheme-3",
+    "brand_headline": "",
+    "brand_description": "<p></p>",
+    "brand_image_width": 100,
     "social_facebook_link": "",
     "social_instagram_link": "",
     "social_youtube_link": "",
@@ -121,6 +126,7 @@
     "show_vendor": false,
     "show_cart_note": false,
     "cart_drawer_collection": "",
+    "cart_color_scheme": "scheme-1",
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
@@ -139,32 +145,32 @@
     "color_schemes": {
       "scheme-1": {
         "settings": {
-          "background": "#f9f9f9",
+          "background": "#f9f7f5",
           "background_gradient": "",
-          "text": "#1e2429",
-          "button": "#2c3e50",
-          "button_label": "#ffffff",
-          "secondary_button_label": "#1e2429",
-          "shadow": "#121212"
+          "text": "#333333",
+          "button": "#1a2a44",
+          "button_label": "#f9f7f5",
+          "secondary_button_label": "#333333",
+          "shadow": "#333333"
         }
       },
       "scheme-2": {
         "settings": {
-          "background": "#f3f3f3",
+          "background": "#1a2a44",
           "background_gradient": "",
-          "text": "#121212",
-          "button": "#121212",
-          "button_label": "#f3f3f3",
-          "secondary_button_label": "#121212",
+          "text": "#f9f7f5",
+          "button": "#d97c5d",
+          "button_label": "#f9f7f5",
+          "secondary_button_label": "#f9f7f5",
           "shadow": "#121212"
         }
       },
       "scheme-3": {
         "settings": {
-          "background": "#242833",
+          "background": "#eae3d9",
           "background_gradient": "",
-          "text": "#ffffff",
-          "button": "#ffffff",
+          "text": "#333333",
+          "button": "#1a2a44",
           "button_label": "#000000",
           "secondary_button_label": "#ffffff",
           "shadow": "#121212"
@@ -191,22 +197,11 @@
           "secondary_button_label": "#ffffff",
           "shadow": "#121212"
         }
-      },
-      "spacewright-default": {
-        "settings": {
-          "background": "#f9f9f9",
-          "background_gradient": "",
-          "text": "#1e2429",
-          "button": "#2c3e50",
-          "button_label": "#ffffff",
-          "secondary_button_label": "#1e2429",
-          "shadow": "#121212"
-        }
       }
     }
   },
   "presets": {
-    "Default": {
+    "Dawn": {
       "logo_width": 90,
       "color_schemes": {
         "scheme-1": {
@@ -273,6 +268,8 @@
       "spacing_sections": 0,
       "spacing_grid_horizontal": 8,
       "spacing_grid_vertical": 8,
+      "animations_reveal_on_scroll": true,
+      "animations_hover_elements": "none",
       "buttons_border_thickness": 1,
       "buttons_border_opacity": 100,
       "buttons_radius": 0,
@@ -356,8 +353,11 @@
       "drawer_shadow_blur": 5,
       "badge_position": "bottom left",
       "badge_corner_radius": 40,
-      "sale_badge_color_scheme": "scheme-5",
+      "sale_badge_color_scheme": "scheme-4",
       "sold_out_badge_color_scheme": "scheme-3",
+      "brand_headline": "",
+      "brand_description": "<p></p>",
+      "brand_image_width": 100,
       "social_twitter_link": "",
       "social_facebook_link": "",
       "social_pinterest_link": "",
@@ -375,6 +375,7 @@
       "show_vendor": false,
       "show_cart_note": false,
       "cart_drawer_collection": "",
+      "cart_color_scheme": "scheme-1",
       "sections": {
         "main-password-header": {
           "type": "main-password-header",
