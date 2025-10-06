@@ -9,44 +9,27 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ],
+    "hero_background_video_hw7zwU": {
+      "type": "hero-background-video",
+      "name": "t:sections.hero-background-video.name",
       "settings": {
-        "image": "shopify://shop_images/Hero_Image_5.png",
-        "image_overlay_opacity": 0,
-        "image_height": "large",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-1",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
+        "height": "hero-video--large",
+        "content_align": "align-center",
+        "content_position": "pos-bottom",
+        "overlay": "#000000",
+        "overlay_opacity": 30,
+        "headline_color": "#F9F7F5",
+        "subheadline_color": "#F9F7F5",
+        "button_bg": "#1A2A44",
+        "button_text": "#F9F7F5",
+        "headline_size": 56,
+        "subheadline_size": 18,
+        "background_video": "shopify://files/videos/AI_Generates_Spacewright_Hero_Section_Video.mp4",
+        "headline": "",
+        "subheadline": "<p>A curated collection of tools to spark creativity and help you find your space.</p>",
+        "button_label": "Explore the Collection",
+        "button_link": "",
+        "disable_mobile": false
       }
     },
     "rich_text_qTYUim": {
@@ -263,7 +246,7 @@
     }
   },
   "order": [
-    "image_banner",
+    "hero_background_video_hw7zwU",
     "rich_text_qTYUim",
     "featured_collection",
     "image_with_text_FiwGPR",
