@@ -1,0 +1,193 @@
+{% doc %}
+  @prompt
+    Generate a section with a large, centered H1 heading. The text in the heading should have a subtle, continuous animated gradient effect. The gradient should slowly and smoothly shift between the theme's primary text color and a slightly lighter shade, creating a calm, flowing, or shimmering motion. The animation speed should be very slow and gentle.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-gradient-heading-{{ ai_gen_id }} {
+    text-align: center;
+    padding: {{ block.settings.padding_top }}px 20px {{ block.settings.padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-gradient-heading__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.heading_size }}px;
+    font-weight: {{ block.settings.font_weight }};
+    margin: 0;
+    line-height: 1.2;
+    background: linear-gradient(
+      45deg,
+      {{ block.settings.primary_color }},
+      {{ block.settings.secondary_color }},
+      {{ block.settings.primary_color }},
+      {{ block.settings.secondary_color }}
+    );
+    background-size: 400% 400%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: ai-gradient-shift-{{ ai_gen_id }} {{ block.settings.animation_speed }}s ease-in-out infinite;
+  }
+
+  @keyframes ai-gradient-shift-{{ ai_gen_id }} {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-gradient-heading__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.8 }}px;
+    }
+  }
+
+  @media screen and (max-width: 479px) {
+    .ai-gradient-heading__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.7 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-gradient-heading-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.heading_text != blank %}
+    <h1 class="ai-gradient-heading__title-{{ ai_gen_id }}">
+      {{ block.settings.heading_text }}
+    </h1>
+  {% else %}
+    <h1 class="ai-gradient-heading__title-{{ ai_gen_id }}">
+      Your heading text here
+    </h1>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Animated gradient heading",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading text",
+      "default": "Welcome to our store"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 64
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        },
+        {
+          "value": "800",
+          "label": "Extra bold"
+        }
+      ],
+      "default": "700"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary gradient color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "secondary_color",
+      "label": "Secondary gradient color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f9f7f5"
+    },
+    {
+      "type": "header",
+      "content": "Animation"
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "min": 3,
+      "max": 15,
+      "step": 1,
+      "unit": "s",
+      "label": "Animation speed",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    }
+  ],
+  "presets": [
+    {
+      "name": "Animated gradient heading"
+    }
+  ]
+}
+{% endschema %}
