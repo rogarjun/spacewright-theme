@@ -276,6 +276,9 @@
     }
   },
   "sections": {
+    "scrolling_announcement_bar": {
+      "aria": "Scrolling announcements"
+    },
     "testimonials": {
       "name": "Testimonials",
       "presets": { "name": "Testimonials" },

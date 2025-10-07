@@ -373,6 +373,55 @@
     }
   },
   "sections": {
+    "scrolling_announcement_bar": {
+      "name": "Scrolling bar",
+      "aria": "Scrolling announcements",
+      "groups": {
+        "animation": "Animation",
+        "typography": "Typography"
+      },
+      "settings": {
+        "scroll_speed": "Scroll speed",
+        "scroll_direction": {
+          "label": "Scroll direction",
+          "options": {
+            "left_to_right": "Left to right",
+            "right_to_left": "Right to left"
+          }
+        },
+        "pause_on_hover": "Pause on hover",
+        "font_size": "Font size",
+        "icon_style": {
+          "label": "Icon style",
+          "options": {
+            "line": "Line art",
+            "solid": "Solid shapes"
+          }
+        }
+      },
+      "blocks": {
+        "announcement": {
+          "name": "Announcement message",
+          "settings": {
+            "text": {
+              "label": "Text",
+              "default": "Announcement",
+              "info": "Supports text and emojis"
+            },
+            "icon": {
+              "label": "Icon",
+              "info": "For best results, use an SVG or square image"
+            },
+            "link": {
+              "label": "Link"
+            }
+          }
+        }
+      },
+      "presets": {
+        "name": "Scrolling bar"
+      }
+    },
     "testimonials": {
       "name": "Testimonials",
       "presets": { "name": "Testimonials" },
