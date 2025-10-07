@@ -60,21 +60,31 @@
         "padding_bottom": 36
       }
     },
-    "brand_mission_pF8ydN": {
+    "brand_mission_QKDeci": {
       "type": "brand-mission",
       "name": "t:sections.brand-mission.name",
       "settings": {
-        "image": "shopify://shop_images/Hero_Image_7.png",
+        "image": "shopify://shop_images/Hero_Image_23.png",
         "layout": "image_left",
         "mobile_layout": "image_first",
         "content_position": "middle",
-        "color_scheme": "",
-        "heading": "Quiet the Noise. Find Your Flow.",
+        "color_scheme": "scheme-1",
+        "text_color_scheme": "scheme-1",
+        "image_height": "adapt",
+        "desktop_image_width": "medium",
+        "heading": "Quiet the Digital Noise. Find Your Flow.",
         "text": "<p>Spacewright's mission is to empower India's ambitious generation to combat digital fatigue and cultivate mental clarity. We provide a curated collection of tools for focus, play, and presence, helping our customers architect a more intentional and fulfilling inner world.</p>",
-        "text_alignment": "center",
+        "text_alignment": "left",
         "button_label": "Discover Our Tools",
-        "button_link": "shopify://collections",
+        "button_link": "",
         "button_style": "primary",
+        "image_reveal_animation": "reveal_side",
+        "text_reveal_animation": "fade_up",
+        "image_hover_effect": "zoom_in",
+        "ambient_movement": false,
+        "animation_duration": 1600,
+        "text_reveal_delay": 400,
+        "slide_distance": 5.5,
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -83,6 +93,6 @@
   "order": [
     "hero_background_video_hw7zwU",
     "featured_collection",
-    "brand_mission_pF8ydN"
+    "brand_mission_QKDeci"
   ]
 }
