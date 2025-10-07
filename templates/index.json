@@ -88,11 +88,141 @@
         "padding_top": 36,
         "padding_bottom": 36
       }
+    },
+    "featured_product_3D7i7E": {
+      "type": "featured-product",
+      "blocks": {
+        "text_yUamMm": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_Hz6zLC": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_nt7FQG": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_qAKNJW": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_b8kVFe": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons_CBwRRG": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_t3jErx": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_yUamMm",
+        "title_Hz6zLC",
+        "price_nt7FQG",
+        "variant_picker_qAKNJW",
+        "quantity_selector_b8kVFe",
+        "buy_buttons_CBwRRG",
+        "share_t3jErx"
+      ],
+      "name": "t:sections.featured-product.presets.name",
+      "settings": {
+        "product": "the-collection-snowboard-hydrogen",
+        "color_scheme": "scheme-2",
+        "secondary_background": false,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "testimonials_TNQ4ac": {
+      "type": "testimonials",
+      "blocks": {
+        "testimonial_slide_YqDPhD": {
+          "type": "testimonial_slide",
+          "settings": {
+            "quote": "<p>Awesome product with fast delivery. :)</p>",
+            "star_rating": 4,
+            "author": "Ishan Panch",
+            "product": "the-multi-managed-snowboard"
+          }
+        },
+        "testimonial_slide_m8AeiK": {
+          "type": "testimonial_slide",
+          "settings": {
+            "quote_icon": "shopify://shop_images/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg",
+            "quote": "<p>Great product exactly what i wanted from this store. good color as well this skateboard can be improved with the quality though coz there is some durability concerns.</p>",
+            "star_rating": 3,
+            "author": "Shikhar Gupta",
+            "product": "the-3p-fulfilled-snowboard"
+          }
+        },
+        "testimonial_slide_rcBi9q": {
+          "type": "testimonial_slide",
+          "settings": {
+            "quote": "<p>Very useful and just like i saw it on the store. Genuine and Trustful.</p>",
+            "star_rating": 5,
+            "author": "Vinayak Sharma",
+            "product": "the-collection-snowboard-oxygen"
+          }
+        },
+        "testimonial_slide_ViwpCt": {
+          "type": "testimonial_slide",
+          "settings": {
+            "quote": "<p>Write a short review that highlights the best parts of your product.</p>",
+            "star_rating": 5,
+            "author": "john doe",
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_slide_YqDPhD",
+        "testimonial_slide_m8AeiK",
+        "testimonial_slide_rcBi9q",
+        "testimonial_slide_ViwpCt"
+      ],
+      "name": "t:sections.testimonials.presets.name",
+      "settings": {
+        "heading": "Trusted by 100,000+ customers",
+        "overall_rating": "4.88",
+        "reviews_count": 1097,
+        "verified_text": "Verified",
+        "autoplay": true,
+        "slide_speed": 4000,
+        "color_scheme": ""
+      }
     }
   },
   "order": [
     "hero_background_video_hw7zwU",
     "featured_collection",
-    "brand_mission_QKDeci"
+    "brand_mission_QKDeci",
+    "featured_product_3D7i7E",
+    "testimonials_TNQ4ac"
   ]
 }
