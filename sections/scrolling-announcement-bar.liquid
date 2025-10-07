@@ -4,6 +4,19 @@
   assign speed = section.settings.scroll_speed
   assign font_size = section.settings.font_size
   assign icon_style = section.settings.icon_style
+  assign separator_style = section.settings.separator_style
+
+  assign sep = ''
+  case separator_style
+    when 'dot'
+      assign sep = '•'
+    when 'pipe'
+      assign sep = '|'
+    when 'slash'
+      assign sep = '/'
+    when 'diamond'
+      assign sep = '◆'
+  endcase
 
   comment
     Use a minimum of one cycle duplication to create seamless loop.
@@ -13,7 +26,7 @@
 
 <div
   class="scrolling-announcement-bar color-{{ section.settings.color_scheme }} gradient icon-style--{{ icon_style }}"
-  style="--sab-font-size: {{ font_size }}px; --sab-speed: {{ speed }}s;"
+  style="--sab-font-size: {{ font_size }}px; --sab-speed: {{ speed }}s; --sab-sep-gap: {{ section.settings.separator_spacing }}px;"
   role="region"
   aria-label="{{ 'sections.scrolling_announcement_bar.aria' | t }}"
 >
@@ -40,8 +53,10 @@
               {%- else -%}
                 </div>
               {%- endif -%}
-              {% if forloop.last == false -%}
-                <span class="sab__sep" aria-hidden="true" role="presentation">•</span>
+              {% if separator_style != 'none' and forloop.last == false -%}
+                <span class="sab__sep sab__sep--{{ separator_style }}" aria-hidden="true" role="presentation">
+                  {{- sep -}}
+                </span>
               {%- endif %}
             </li>
           {%- endfor -%}
@@ -53,6 +68,11 @@
             {%- assign link = block.settings.link -%}
             {%- assign icon = block.settings.icon -%}
             <li class="sab__item">
+              {% if separator_style != 'none' and forloop.first %}
+                <span class="sab__sep sab__sep--{{ separator_style }}" aria-hidden="true" role="presentation">
+                  {{- sep -}}
+                </span>
+              {% endif %}
               {%- if link != blank -%}
                 <a class="sab__link" href="{{ link }}" tabindex="-1">
               {%- else -%}
@@ -67,8 +87,10 @@
               {%- else -%}
                 </div>
               {%- endif -%}
-              {% if forloop.last == false -%}
-                <span class="sab__sep" aria-hidden="true" role="presentation">•</span>
+              {% if separator_style != 'none' and forloop.last == false -%}
+                <span class="sab__sep sab__sep--{{ separator_style }}" aria-hidden="true" role="presentation">
+                  {{- sep -}}
+                </span>
               {%- endif %}
             </li>
           {%- endfor -%}
@@ -129,11 +151,16 @@
   }
   .scrolling-announcement-bar .sab__sep {
     display: inline-block;
-    margin: 0 1rem;
+    margin: 0 var(--sab-sep-gap, 16px);
     opacity: 0.6;
     font-weight: 700;
     font-size: calc(var(--sab-font-size, 14px) * 1.5);
     line-height: 1;
+  }
+  /* make pipes look balanced */
+  .scrolling-announcement-bar .sab__sep:where(:contains('|')) {
+    font-weight: 600;
+    opacity: 0.5;
   }
   .scrolling-announcement-bar .sab__icon {
     width: 1.25em;
@@ -236,6 +263,33 @@
         { "value": "solid", "label": "t:sections.scrolling_announcement_bar.settings.icon_style.options.solid" }
       ],
       "default": "line"
+    },
+    { "type": "header", "content": "t:sections.scrolling_announcement_bar.groups.separators" },
+    {
+      "type": "select",
+      "id": "separator_style",
+      "label": "t:sections.scrolling_announcement_bar.settings.separator_style.label",
+      "options": [
+        { "value": "none", "label": "t:sections.scrolling_announcement_bar.settings.separator_style.options.none" },
+        { "value": "dot", "label": "t:sections.scrolling_announcement_bar.settings.separator_style.options.dot" },
+        { "value": "pipe", "label": "t:sections.scrolling_announcement_bar.settings.separator_style.options.pipe" },
+        { "value": "slash", "label": "t:sections.scrolling_announcement_bar.settings.separator_style.options.slash" },
+        {
+          "value": "diamond",
+          "label": "t:sections.scrolling_announcement_bar.settings.separator_style.options.diamond"
+        }
+      ],
+      "default": "dot"
+    },
+    {
+      "type": "range",
+      "id": "separator_spacing",
+      "label": "t:sections.scrolling_announcement_bar.settings.separator_spacing",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
     }
   ],
   "blocks": [

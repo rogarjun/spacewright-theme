@@ -32,6 +32,62 @@
         "disable_mobile": false
       }
     },
+    "scrolling_announcement_bar_9wCmBU": {
+      "type": "scrolling-announcement-bar",
+      "blocks": {
+        "announcement_B8Bnda": {
+          "type": "announcement",
+          "settings": {
+            "text": "FREE SHIPPING ON ORDERS OVER ₹999",
+            "link": ""
+          }
+        },
+        "announcement_hGNefg": {
+          "type": "announcement",
+          "settings": {
+            "text": "TOOLS FOR A QUIETER MIND",
+            "link": ""
+          }
+        },
+        "announcement_r8hYpR": {
+          "type": "announcement",
+          "settings": {
+            "text": "AVAILABLE ALL OVER INDIA",
+            "link": ""
+          }
+        },
+        "announcement_3Nm9DX": {
+          "type": "announcement",
+          "settings": {
+            "text": "NO OVERLAP OF THE TEXT",
+            "link": ""
+          }
+        },
+        "announcement_7kLe6N": {
+          "type": "announcement",
+          "settings": {
+            "text": "Announcement",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "announcement_B8Bnda",
+        "announcement_hGNefg",
+        "announcement_r8hYpR",
+        "announcement_3Nm9DX",
+        "announcement_7kLe6N"
+      ],
+      "name": "t:sections.scrolling_announcement_bar.presets.name",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "scroll_speed": 25,
+        "scroll_direction": "ltr",
+        "pause_on_hover": true,
+        "font_size": 14,
+        "icon_style": "solid"
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -220,6 +276,7 @@
   },
   "order": [
     "hero_background_video_hw7zwU",
+    "scrolling_announcement_bar_9wCmBU",
     "featured_collection",
     "brand_mission_QKDeci",
     "featured_product_3D7i7E",

@@ -378,7 +378,8 @@
       "aria": "Scrolling announcements",
       "groups": {
         "animation": "Animation",
-        "typography": "Typography"
+        "typography": "Typography",
+        "separators": "Separators"
       },
       "settings": {
         "scroll_speed": "Scroll speed",
@@ -397,7 +398,18 @@
             "line": "Line art",
             "solid": "Solid shapes"
           }
-        }
+        },
+        "separator_style": {
+          "label": "Separator style",
+          "options": {
+            "none": "None",
+            "dot": "Dot",
+            "pipe": "Pipe",
+            "slash": "Slash",
+            "diamond": "Diamond"
+          }
+        },
+        "separator_spacing": "Separator spacing"
       },
       "blocks": {
         "announcement": {
