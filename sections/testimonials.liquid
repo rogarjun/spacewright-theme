@@ -1,0 +1,527 @@
+{%- comment -%}
+  Testimonials section with content slide-in/out animation.
+  Follows Dawn patterns: color scheme, page-width container, schema blocks.
+{%- endcomment -%}
+{{ 'component-rating.css' | asset_url | stylesheet_tag }}
+
+<section
+  id="shopify-section-{{ section.id }}"
+  class="testimonials color-{{ section.settings.color_scheme }} gradient"
+  data-section-id="{{ section.id }}"
+  data-section-type="testimonials"
+  data-testimonials="{{ section.id }}"
+  data-autoplay="{{ section.settings.autoplay }}"
+  data-speed="{{ section.settings.slide_speed }}"
+>
+  <div class="testimonials__inner page-width">
+    <div class="testimonials__summary">
+      {%- liquid
+        assign rating_value = section.settings.overall_rating | default: 0 | replace: ',', '.' | times: 1.0
+        if rating_value < 0
+          assign rating_value = 0
+        endif
+        if rating_value > 5
+          assign rating_value = 5
+        endif
+        assign rating_floor = rating_value | floor
+        assign rating_decimal = rating_value | minus: rating_floor | times: 10 | round
+      -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="testimonials__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+
+      <div
+        class="testimonials__meta"
+        aria-label="{{ 'accessibility.star_reviews_info' | t: rating_value: rating_value, rating_max: 5 }}"
+      >
+        <span class="rating" aria-hidden="true">
+          <span
+            class="rating-star testimonials__meta-stars"
+            style="--rating: {{ rating_value }}; --rating-max: 5; --rating-decimal: {{ rating_decimal }};"
+          ></span>
+        </span>
+        <span class="testimonials__meta-number">{{ rating_value }}</span>
+        <img
+          class="testimonials__meta-icon"
+          src="{{ 'icon-star.svg' | asset_url }}"
+          width="18"
+          height="18"
+          alt=""
+          loading="lazy"
+        >
+        <span class="testimonials__meta-count">({{ section.settings.reviews_count }})</span>
+        {%- if section.settings.verified_text != blank -%}
+          <span class="testimonials__meta-verified">{{ section.settings.verified_text | escape }}</span>
+          <img
+            class="testimonials__meta-icon"
+            src="{{ 'icon-verified.svg' | asset_url }}"
+            width="18"
+            height="18"
+            alt=""
+            loading="lazy"
+          >
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- assign slide_count = section.blocks.size -%}
+    <div
+      class="testimonials__slider"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Testimonials"
+      aria-live="polite"
+    >
+      <div class="testimonials__viewport">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'testimonial_slide' -%}
+            <div
+              class="testimonial-slide{% if forloop.first %} is-active{% endif %}"
+              id="testimonial-slide-{{ section.id }}-{{ forloop.index }}"
+              role="group"
+              aria-roledescription="slide"
+              aria-label="{{ forloop.index }} / {{ slide_count }}"
+              data-index="{{ forloop.index0 }}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="testimonial-slide__inner">
+                <div class="testimonial-slide__quote-icon">
+                  {%- if block.settings.quote_icon != blank -%}
+                    {{ block.settings.quote_icon | image_url: width: 96 | image_tag: widths: '96,144', alt: '"' }}
+                  {%- else -%}
+                    <span class="testimonial-slide__quote-fallback" aria-hidden="true">
+                      {{- 'icon-quote.svg' | inline_asset_content -}}
+                    </span>
+                  {%- endif -%}
+                </div>
+
+                <div class="testimonial-slide__text rte">{{ block.settings.quote }}</div>
+
+                <div class="testimonial-slide__stars" aria-hidden="true">
+                  {%- assign block_rating = block.settings.star_rating | default: 0 -%}
+                  {%- for i in (1..5) -%}
+                    <span class="testimonial-slide__star{% if i <= block_rating %} is-active{% endif %}">
+                      {{ 'icon-star.svg' | inline_asset_content }}
+                    </span>
+                  {%- endfor -%}
+                </div>
+
+                {%- if block.settings.author != blank -%}
+                  <div class="testimonial-slide__author">{{ block.settings.author | escape }}</div>
+                {%- endif -%}
+
+                {%- if block.settings.product != blank -%}
+                  <a class="testimonial-slide__product" href="{{ block.settings.product.url }}">
+                    {{- block.settings.product.title | escape -}}
+                  </a>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if slide_count > 1 -%}
+        <div class="testimonials__navs" data-controls>
+          <button
+            type="button"
+            class="testimonials__nav testimonials__nav--prev"
+            aria-controls="testimonial-slide-{{ section.id }}-1"
+            aria-label="{{ 'general.slider.previous_slide' | t }}"
+          >
+            <img src="{{ 'icon-chevron-left.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy">
+          </button>
+          <button
+            type="button"
+            class="testimonials__nav testimonials__nav--next"
+            aria-controls="testimonial-slide-{{ section.id }}-1"
+            aria-label="{{ 'general.slider.next_slide' | t }}"
+          >
+            <img src="{{ 'icon-chevron-right.svg' | asset_url }}" width="20" height="20" alt="" loading="lazy">
+          </button>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- stylesheet -%}
+  .testimonials {
+    padding-top: 40px;
+    padding-bottom: 56px;
+  }
+  .testimonials__inner {
+    text-align: center;
+  }
+  .testimonials__heading {
+    margin: 0 0 10px;
+    font-size: clamp(1.6rem, 1.2rem + 1.2vw, 3.2rem);
+    font-weight: 700;
+  }
+  .testimonials__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: rgb(var(--color-foreground));
+  }
+  .testimonials__meta-icon {
+    display: inline-block;
+    vertical-align: middle;
+    opacity: 0.9;
+  }
+  .testimonials__meta-stars {
+    --color-rating-star: #f4b223;
+  }
+  .testimonials__meta-number {
+    font-weight: 600;
+  }
+  .testimonials__meta-star {
+    color: #f4b223;
+    margin-left: -6px;
+  }
+  .testimonials__meta-check img {
+    display: inline-block;
+    vertical-align: middle;
+    filter: hue-rotate(75deg) saturate(1.2);
+  }
+
+  .testimonials__slider {
+    position: relative;
+    margin-top: 28px;
+  }
+  .testimonials__viewport {
+    position: relative;
+    min-height: 240px;
+  }
+
+  .testimonial-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    display: grid;
+    place-items: center;
+  }
+  .testimonial-slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .testimonial-slide__inner {
+    max-width: min(980px, 92vw);
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    padding: clamp(14px, 4vw, 40px);
+    transition: transform var(--ts-speed, 500ms) cubic-bezier(0.3, 0.7, 0.4, 1);
+    transform: translateX(0);
+  }
+  .testimonials.color-background-1 .testimonial-slide__inner {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  .testimonial-slide__quote-icon {
+    font-size: 56px;
+    line-height: 1;
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+  .testimonial-slide__quote-fallback {
+    display: inline-flex;
+    width: 1em;
+    height: 1em;
+    font-size: 48px;
+  }
+  .testimonial-slide__quote-fallback svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+    fill: currentColor;
+  }
+  .testimonial-slide__text {
+    font-size: clamp(1.4rem, 1.1rem + 0.5vw, 1.8rem);
+    line-height: 1.8;
+    margin: 0 auto 14px;
+  }
+  .testimonial-slide__stars {
+    color: #f4b223;
+    font-size: 22px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+  .testimonial-slide__star {
+    opacity: 0.35;
+    display: inline-flex;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+  }
+  .testimonial-slide__star.is-active {
+    opacity: 1;
+  }
+  .testimonial-slide__star svg {
+    width: 1em;
+    height: 1em;
+    display: block;
+    fill: currentColor;
+  }
+  .testimonial-slide__author {
+    font-weight: 700;
+    text-transform: capitalize;
+    margin-top: 6px;
+  }
+  .testimonial-slide__product {
+    display: inline-block;
+    margin-top: 6px;
+    color: rgb(var(--color-foreground));
+    text-decoration: underline;
+  }
+
+  /* Animation states applied to the inner content only */
+  .testimonial-slide__inner.anim-out-left {
+    transform: translateX(-100%);
+  }
+  .testimonial-slide__inner.anim-out-right {
+    transform: translateX(100%);
+  }
+  .testimonial-slide__inner.anim-in-to-center {
+    transform: translateX(0);
+  }
+
+  .testimonials__navs {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .testimonials__nav {
+    border: 1px solid rgba(var(--color-foreground), 0.15);
+    background: transparent;
+    color: rgb(var(--color-foreground));
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 20px;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .testimonials__nav:hover {
+    background: rgba(var(--color-foreground), 0.08);
+  }
+  .testimonials__nav:focus-visible {
+    outline: 2px solid rgba(var(--color-foreground), 0.4);
+    outline-offset: 2px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .testimonial-slide__inner {
+      border-radius: 10px;
+    }
+  }
+{%- endstylesheet -%}
+
+{%- javascript -%}
+  (function () {
+    function init(root) {
+      if (!root || root.dataset.initialized === 'true') return;
+      var slides = Array.prototype.slice.call(root.querySelectorAll('.testimonial-slide'));
+      if (!slides.length) return;
+      var current = 0;
+      var busy = false;
+      var autoplay = String(root.getAttribute('data-autoplay')) === 'true';
+      var speed = parseInt(root.getAttribute('data-speed'), 10) || 5000;
+      var animTime = 500; // must match CSS var(--ts-speed)
+      if (!slides[0].classList.contains('is-active')) {
+        slides[0].classList.add('is-active');
+      }
+
+      function go(dir) {
+        if (busy || slides.length < 2) return;
+        busy = true;
+        var outSlide = slides[current];
+        var nextIndex = (current + dir + slides.length) % slides.length;
+        var inSlide = slides[nextIndex];
+
+        var outInner = outSlide.querySelector('.testimonial-slide__inner');
+        var inInner = inSlide.querySelector('.testimonial-slide__inner');
+
+        inSlide.classList.add('is-active');
+        inInner.style.transform = dir > 0 ? 'translateX(100%)' : 'translateX(-100%)';
+        void inInner.offsetWidth;
+        outInner.classList.add(dir > 0 ? 'anim-out-left' : 'anim-out-right');
+        inInner.classList.add('anim-in-to-center');
+
+        setTimeout(function () {
+          outInner.classList.remove('anim-out-left', 'anim-out-right');
+          inInner.classList.remove('anim-in-to-center');
+          outSlide.classList.remove('is-active');
+          outInner.style.transform = '';
+          inInner.style.transform = '';
+          current = nextIndex;
+          busy = false;
+        }, animTime);
+      }
+
+      var prevBtn = root.querySelector('.testimonials__nav--prev');
+      var nextBtn = root.querySelector('.testimonials__nav--next');
+      if (prevBtn)
+        prevBtn.addEventListener('click', function () {
+          go(-1);
+          restartAutoplay();
+        });
+      if (nextBtn)
+        nextBtn.addEventListener('click', function () {
+          go(1);
+          restartAutoplay();
+        });
+
+      var timer = null;
+      function startAutoplay() {
+        if (!autoplay || slides.length < 2) return;
+        stopAutoplay();
+        timer = setInterval(function () {
+          go(1);
+        }, Math.max(2000, speed));
+      }
+      function stopAutoplay() {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      }
+      function restartAutoplay() {
+        stopAutoplay();
+        startAutoplay();
+      }
+
+      root.addEventListener('mouseenter', stopAutoplay);
+      root.addEventListener('mouseleave', startAutoplay);
+      startAutoplay();
+
+      root.dataset.initialized = 'true';
+    }
+
+    function initAll() {
+      var roots = document.querySelectorAll('[data-section-type="testimonials"]');
+      roots.forEach(init);
+    }
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      initAll();
+    } else {
+      document.addEventListener('DOMContentLoaded', initAll);
+    }
+
+    document.addEventListener('shopify:section:load', function (evt) {
+      var container = evt && evt.target ? evt.target : null;
+      if (!container) return;
+      var root = container.querySelector && container.querySelector('[data-section-type="testimonials"]');
+      if (root) init(root);
+    });
+  })();
+{%- endjavascript -%}
+
+{%- schema -%}
+{
+  "name": "t:sections.testimonials.name",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.testimonials.settings.heading.label",
+      "default": "Trusted by 100,000+ customers"
+    },
+    {
+      "type": "text",
+      "id": "overall_rating",
+      "label": "t:sections.testimonials.settings.overall_rating.label",
+      "default": "4.88"
+    },
+    {
+      "type": "number",
+      "id": "reviews_count",
+      "label": "t:sections.testimonials.settings.reviews_count.label",
+      "default": 1097
+    },
+    {
+      "type": "text",
+      "id": "verified_text",
+      "label": "t:sections.testimonials.settings.verified_text.label",
+      "default": "Verified"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:sections.testimonials.settings.autoplay.label",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "slide_speed",
+      "label": "t:sections.testimonials.settings.slide_speed.label",
+      "min": 2000,
+      "max": 9000,
+      "step": 500,
+      "unit": "ms",
+      "default": 5000
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.testimonials.settings.color_scheme.label",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial_slide",
+      "name": "t:sections.testimonials.blocks.testimonial_slide.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "quote_icon",
+          "label": "t:sections.testimonials.blocks.testimonial_slide.settings.quote_icon.label"
+        },
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "t:sections.testimonials.blocks.testimonial_slide.settings.quote.label",
+          "default": "<p>Write a short review that highlights the best parts of your product.</p>"
+        },
+        {
+          "type": "range",
+          "id": "star_rating",
+          "label": "t:sections.testimonials.blocks.testimonial_slide.settings.star_rating.label",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "t:sections.testimonials.blocks.testimonial_slide.settings.author.label",
+          "default": "john doe"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.testimonials.blocks.testimonial_slide.settings.product.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.testimonials.presets.name",
+      "blocks": [{ "type": "testimonial_slide" }, { "type": "testimonial_slide" }, { "type": "testimonial_slide" }]
+    }
+  ]
+}
+{%- endschema -%}

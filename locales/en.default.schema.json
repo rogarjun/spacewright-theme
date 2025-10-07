@@ -373,6 +373,32 @@
     }
   },
   "sections": {
+    "testimonials": {
+      "name": "Testimonials",
+      "presets": { "name": "Testimonials" },
+      "settings": {
+        "heading": { "label": "Heading" },
+        "overall_rating": { "label": "Overall rating" },
+        "reviews_count": { "label": "Total reviews count" },
+        "verified_text": { "label": "Verified label" },
+        "autoplay": { "label": "Autoplay" },
+        "slide_speed": { "label": "Slide speed (ms)" },
+        "color_scheme": { "label": "Color scheme" }
+      },
+      "blocks": {
+        "testimonial_slide": {
+          "name": "Testimonial slide",
+          "settings": {
+            "quote_icon": { "label": "Quote icon" },
+            "quote": { "label": "Quote" },
+            "star_rating": { "label": "Star rating" },
+            "author": { "label": "Author" },
+            "product": { "label": "Product" }
+          }
+        }
+      },
+      "groups": {}
+    },
     "brand-mission": {
       "name": "Brand mission",
       "presets": {
