@@ -1,0 +1,332 @@
+{%- liquid
+  assign dir = section.settings.scroll_direction
+  assign pause_on_hover = section.settings.pause_on_hover
+  assign speed = section.settings.scroll_speed
+  assign font_size = section.settings.font_size
+  assign icon_style = section.settings.icon_style
+  assign separator_style = section.settings.separator_style
+
+  assign sep = ''
+  case separator_style
+    when 'dot'
+      assign sep = '•'
+    when 'pipe'
+      assign sep = '|'
+    when 'slash'
+      assign sep = '/'
+    when 'diamond'
+      assign sep = '◆'
+  endcase
+
+  comment
+    Use a minimum of one cycle duplication to create seamless loop.
+    We render the blocks twice if more than 1 block exists.
+  endcomment
+-%}
+
+<div
+  class="scrolling-announcement-bar color-{{ section.settings.color_scheme }} gradient icon-style--{{ icon_style }}"
+  style="--sab-font-size: {{ font_size }}px; --sab-speed: {{ speed }}s; --sab-sep-gap: {{ section.settings.separator_spacing }}px;"
+  role="region"
+  aria-label="{{ 'sections.scrolling_announcement_bar.aria' | t }}"
+>
+  <div class="sab__viewport{% if pause_on_hover %} sab--pause-on-hover{% endif %}">
+    <div class="sab__track{% if dir == 'rtl' %} sab--rtl{% endif %}">
+      {%- if section.blocks.size > 0 -%}
+        <ul class="sab__list" aria-hidden="false">
+          {%- for block in section.blocks -%}
+            {%- assign text = block.settings.text -%}
+            {%- assign link = block.settings.link -%}
+            {%- assign icon = block.settings.icon -%}
+            <li class="sab__item" {{ block.shopify_attributes }}>
+              {%- if link != blank -%}
+                <a class="sab__link" href="{{ link }}">
+              {%- else -%}
+                <div class="sab__link" aria-hidden="true">
+              {%- endif -%}
+              {%- if icon != blank -%}
+                {{ icon | image_url: width: 64 | image_tag: class: 'sab__icon', alt: '' }}
+              {%- endif -%}
+              <span class="sab__text">{{ text | escape }}</span>
+              {%- if link != blank -%}
+                </a>
+              {%- else -%}
+                </div>
+              {%- endif -%}
+              {% if separator_style != 'none' and forloop.last == false -%}
+                <span class="sab__sep sab__sep--{{ separator_style }}" aria-hidden="true" role="presentation">
+                  {{- sep -}}
+                </span>
+              {%- endif %}
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        <ul class="sab__list sab__list--clone" aria-hidden="true">
+          {%- for block in section.blocks -%}
+            {%- assign text = block.settings.text -%}
+            {%- assign link = block.settings.link -%}
+            {%- assign icon = block.settings.icon -%}
+            <li class="sab__item">
+              {% if separator_style != 'none' and forloop.first %}
+                <span class="sab__sep sab__sep--{{ separator_style }}" aria-hidden="true" role="presentation">
+                  {{- sep -}}
+                </span>
+              {% endif %}
+              {%- if link != blank -%}
+                <a class="sab__link" href="{{ link }}" tabindex="-1">
+              {%- else -%}
+                <div class="sab__link" aria-hidden="true">
+              {%- endif -%}
+              {%- if icon != blank -%}
+                {{ icon | image_url: width: 64 | image_tag: class: 'sab__icon', alt: '' }}
+              {%- endif -%}
+              <span class="sab__text">{{ text | escape }}</span>
+              {%- if link != blank -%}
+                </a>
+              {%- else -%}
+                </div>
+              {%- endif -%}
+              {% if separator_style != 'none' and forloop.last == false -%}
+                <span class="sab__sep sab__sep--{{ separator_style }}" aria-hidden="true" role="presentation">
+                  {{- sep -}}
+                </span>
+              {%- endif %}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .scrolling-announcement-bar {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .scrolling-announcement-bar .sab__viewport {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .scrolling-announcement-bar .sab__track {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: max-content;
+    will-change: transform;
+    animation: sab-track-scroll var(--sab-speed, 20s) linear infinite;
+  }
+
+  .scrolling-announcement-bar .sab__list {
+    display: inline-flex;
+    gap: 0;
+    padding: 0.75rem 1rem;
+    margin: 0;
+    list-style: none;
+    align-items: center;
+  }
+  .scrolling-announcement-bar .sab__list > .sab__item {
+    flex: 0 0 auto;
+  }
+
+  .scrolling-announcement-bar .sab__item {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .scrolling-announcement-bar .sab__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+  }
+  .scrolling-announcement-bar .sab__text {
+    font-size: var(--sab-font-size, 14px);
+    white-space: nowrap;
+    padding: 0 0.125rem;
+  }
+  .scrolling-announcement-bar .sab__sep {
+    display: inline-block;
+    margin: 0 var(--sab-sep-gap, 16px);
+    opacity: 0.6;
+    font-weight: 700;
+    font-size: calc(var(--sab-font-size, 14px) * 1.5);
+    line-height: 1;
+  }
+  /* make pipes look balanced */
+  .scrolling-announcement-bar .sab__sep:where(:contains('|')) {
+    font-weight: 600;
+    opacity: 0.5;
+  }
+  .scrolling-announcement-bar .sab__icon {
+    width: 1.25em;
+    height: 1.25em;
+    object-fit: contain;
+  }
+
+  .scrolling-announcement-bar.icon-style--line .sab__icon {
+    filter: grayscale(1) contrast(1.1);
+  }
+  .scrolling-announcement-bar.icon-style--solid .sab__icon {
+    filter: none;
+  }
+
+  /* clone is static; no extra styles needed */
+
+  @keyframes sab-track-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .scrolling-announcement-bar .sab--rtl {
+    animation-name: sab-track-scroll-rtl;
+  }
+  @keyframes sab-track-scroll-rtl {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .scrolling-announcement-bar .sab--pause-on-hover:hover .sab__track {
+    animation-play-state: paused;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:sections.scrolling_announcement_bar.name",
+  "class": "scrolling-announcement-bar-section",
+  "max_blocks": 50,
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "header", "content": "t:sections.scrolling_announcement_bar.groups.animation" },
+    {
+      "type": "range",
+      "id": "scroll_speed",
+      "label": "t:sections.scrolling_announcement_bar.settings.scroll_speed",
+      "min": 5,
+      "max": 60,
+      "step": 1,
+      "unit": "s",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "scroll_direction",
+      "label": "t:sections.scrolling_announcement_bar.settings.scroll_direction.label",
+      "options": [
+        {
+          "value": "ltr",
+          "label": "t:sections.scrolling_announcement_bar.settings.scroll_direction.options.left_to_right"
+        },
+        {
+          "value": "rtl",
+          "label": "t:sections.scrolling_announcement_bar.settings.scroll_direction.options.right_to_left"
+        }
+      ],
+      "default": "ltr"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "t:sections.scrolling_announcement_bar.settings.pause_on_hover",
+      "default": true
+    },
+    { "type": "header", "content": "t:sections.scrolling_announcement_bar.groups.typography" },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "t:sections.scrolling_announcement_bar.settings.font_size",
+      "min": 10,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "icon_style",
+      "label": "t:sections.scrolling_announcement_bar.settings.icon_style.label",
+      "options": [
+        { "value": "line", "label": "t:sections.scrolling_announcement_bar.settings.icon_style.options.line" },
+        { "value": "solid", "label": "t:sections.scrolling_announcement_bar.settings.icon_style.options.solid" }
+      ],
+      "default": "line"
+    },
+    { "type": "header", "content": "t:sections.scrolling_announcement_bar.groups.separators" },
+    {
+      "type": "select",
+      "id": "separator_style",
+      "label": "t:sections.scrolling_announcement_bar.settings.separator_style.label",
+      "options": [
+        { "value": "none", "label": "t:sections.scrolling_announcement_bar.settings.separator_style.options.none" },
+        { "value": "dot", "label": "t:sections.scrolling_announcement_bar.settings.separator_style.options.dot" },
+        { "value": "pipe", "label": "t:sections.scrolling_announcement_bar.settings.separator_style.options.pipe" },
+        { "value": "slash", "label": "t:sections.scrolling_announcement_bar.settings.separator_style.options.slash" },
+        {
+          "value": "diamond",
+          "label": "t:sections.scrolling_announcement_bar.settings.separator_style.options.diamond"
+        }
+      ],
+      "default": "dot"
+    },
+    {
+      "type": "range",
+      "id": "separator_spacing",
+      "label": "t:sections.scrolling_announcement_bar.settings.separator_spacing",
+      "min": 4,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "t:sections.scrolling_announcement_bar.blocks.announcement.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "t:sections.scrolling_announcement_bar.blocks.announcement.settings.text.label",
+          "info": "t:sections.scrolling_announcement_bar.blocks.announcement.settings.text.info",
+          "default": "t:sections.scrolling_announcement_bar.blocks.announcement.settings.text.default"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "t:sections.scrolling_announcement_bar.blocks.announcement.settings.icon.label",
+          "info": "t:sections.scrolling_announcement_bar.blocks.announcement.settings.icon.info"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.scrolling_announcement_bar.blocks.announcement.settings.link.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.scrolling_announcement_bar.presets.name",
+      "blocks": [
+        { "type": "announcement", "settings": { "text": "FREE SHIPPING ON ORDERS OVER ₹999" } },
+        { "type": "announcement", "settings": { "text": "TOOLS FOR A QUIETER MIND" } },
+        { "type": "announcement", "settings": { "text": "ETHICALLY SOURCED & MINDFULLY MADE" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
