@@ -84,8 +84,10 @@
         "scroll_speed": 25,
         "scroll_direction": "ltr",
         "pause_on_hover": true,
-        "font_size": 14,
-        "icon_style": "solid"
+        "font_size": 12,
+        "icon_style": "solid",
+        "separator_style": "diamond",
+        "separator_spacing": 16
       }
     },
     "featured_collection": {
