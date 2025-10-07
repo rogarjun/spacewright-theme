@@ -587,7 +587,10 @@ details > * {
   --duration-extended: 3s;
   --ease-out-slow: cubic-bezier(0, 0, 0.3, 1);
   --animation-slide-in: slideIn var(--duration-extra-long) var(--ease-out-slow) forwards;
-  --animation-fade-in: fadeIn var(--duration-extra-long) var(--ease-out-slow);
+  /* Ensure fade-in retains final state to avoid flicker */
+  --animation-fade-in: fadeIn var(--duration-extra-long) var(--ease-out-slow) forwards;
+  /* Default reveal distance; can be overridden per-section (e.g., Brand Mission) */
+  --reveal-distance: 3rem;
 }
 
 .underlined-link,
@@ -3275,11 +3278,12 @@ details-disclosure > details {
 
   .scroll-trigger.animate--fade-in,
   .scroll-trigger.animate--slide-in {
-    opacity: 0.01;
+    opacity: 0.001; /* start slightly more transparent to make effect more noticeable */
   }
 
   .scroll-trigger.animate--slide-in {
-    transform: translateY(2rem);
+    /* Use configurable distance so sections can override via --reveal-distance */
+    transform: translateY(var(--reveal-distance));
   }
 
   .scroll-trigger:not(.scroll-trigger--offscreen).animate--fade-in {
@@ -3308,7 +3312,8 @@ details-disclosure > details {
 
   @keyframes slideIn {
     from {
-      transform: translateY(2rem);
+      /* Use the same distance variable to stay consistent with the initial state */
+      transform: translateY(var(--reveal-distance));
       opacity: 0.01;
     }
     to {

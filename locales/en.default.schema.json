@@ -377,24 +377,39 @@
       "name": "Brand mission",
       "groups": {
         "text": "Text content",
-        "button": "Button"
+        "button": "Button",
+        "animation": "Animation & Effects"
       },
       "settings": {
         "image": { "label": "Image" },
         "layout": { "label": "Desktop layout", "options": { "image_left": "Image on left", "image_right": "Image on right" } },
         "mobile_layout": { "label": "Mobile layout", "options": { "image_first": "Image first", "text_first": "Text first" } },
         "content_position": { "label": "Content vertical alignment" },
+        "text_color_scheme": { "label": "Text container color scheme" },
+        "image_height": { "label": "Image height" },
+        "desktop_image_width": { "label": "Desktop image width" },
         "heading": { "label": "Heading" },
         "text": { "label": "Text" },
         "text_alignment": { "label": "Text alignment" },
         "button_label": { "label": "Button label" },
         "button_link": { "label": "Button link" },
-        "button_style": { "label": "Button style" }
+        "button_style": { "label": "Button style" },
+        "image_reveal_animation": { "label": "Image reveal animation" },
+        "text_reveal_animation": { "label": "Text reveal animation" },
+        "image_hover_effect": { "label": "Image hover effect" },
+        "ambient_movement": { "label": "Enable subtle image movement" },
+        "animation_duration": { "label": "Reveal animation duration" },
+        "text_reveal_delay": { "label": "Text reveal delay" },
+        "slide_distance": { "label": "Slide distance" }
       },
       "options": {
         "position": { "top": "Top", "middle": "Middle", "bottom": "Bottom" },
         "alignment": { "left": "Left", "center": "Center", "right": "Right" },
-        "button_style": { "primary": "Primary", "secondary": "Secondary" }
+        "button_style": { "primary": "Primary", "secondary": "Secondary" },
+        "image_height": { "adapt": "Adapt to image", "small": "Small", "medium": "Medium", "large": "Large" },
+        "desktop_image_width": { "small": "Small (33%)", "medium": "Medium (50%)", "large": "Large (66%)" },
+        "animations": { "none": "None", "fade_in": "Fade in", "reveal_side": "Reveal from side", "fade_up": "Fade in & slide up" },
+        "hover": { "none": "None", "zoom_in": "Zoom in" }
       },
       "defaults": {
         "heading": "Quiet the Digital Noise. Find Your Flow.",
