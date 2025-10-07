@@ -373,6 +373,35 @@
     }
   },
   "sections": {
+    "brand-mission": {
+      "name": "Brand mission",
+      "groups": {
+        "text": "Text content",
+        "button": "Button"
+      },
+      "settings": {
+        "image": { "label": "Image" },
+        "layout": { "label": "Desktop layout", "options": { "image_left": "Image on left", "image_right": "Image on right" } },
+        "mobile_layout": { "label": "Mobile layout", "options": { "image_first": "Image first", "text_first": "Text first" } },
+        "content_position": { "label": "Content vertical alignment" },
+        "heading": { "label": "Heading" },
+        "text": { "label": "Text" },
+        "text_alignment": { "label": "Text alignment" },
+        "button_label": { "label": "Button label" },
+        "button_link": { "label": "Button link" },
+        "button_style": { "label": "Button style" }
+      },
+      "options": {
+        "position": { "top": "Top", "middle": "Middle", "bottom": "Bottom" },
+        "alignment": { "left": "Left", "center": "Center", "right": "Right" },
+        "button_style": { "primary": "Primary", "secondary": "Secondary" }
+      },
+      "defaults": {
+        "heading": "Quiet the Digital Noise. Find Your Flow.",
+        "text": "<p>Spacewright's mission is to empower India's ambitious generation to combat digital fatigue and cultivate mental clarity. We provide a curated collection of tools for focus, play, and presence, helping our customers architect a more intentional and fulfilling inner world.</p>",
+        "button_label": "Discover Our Tools"
+      }
+    },
     "hero-background-video": {
       "name": "Hero background video",
       "groups": {
