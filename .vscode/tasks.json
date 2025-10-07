@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Shopify: Theme Dev (IPv4-first)",
+			"type": "shell",
+			"command": "$env:NODE_OPTIONS='--dns-result-order=ipv4first'; $env:SHOPIFY_FLAG_DEBUG='1'; shopify theme dev --store spacewright-project.myshopify.com",
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}
