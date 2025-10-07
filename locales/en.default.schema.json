@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "settings_schema": {
     "global": {
@@ -364,6 +373,126 @@
     }
   },
   "sections": {
+    "brand-mission": {
+      "name": "Brand mission",
+      "groups": {
+        "text": "Text content",
+        "button": "Button",
+        "animation": "Animation & Effects"
+      },
+      "settings": {
+        "image": { "label": "Image" },
+        "layout": { "label": "Desktop layout", "options": { "image_left": "Image on left", "image_right": "Image on right" } },
+        "mobile_layout": { "label": "Mobile layout", "options": { "image_first": "Image first", "text_first": "Text first" } },
+        "content_position": { "label": "Content vertical alignment" },
+        "text_color_scheme": { "label": "Text container color scheme" },
+        "image_height": { "label": "Image height" },
+        "desktop_image_width": { "label": "Desktop image width" },
+        "heading": { "label": "Heading" },
+        "text": { "label": "Text" },
+        "text_alignment": { "label": "Text alignment" },
+        "button_label": { "label": "Button label" },
+        "button_link": { "label": "Button link" },
+        "button_style": { "label": "Button style" },
+        "image_reveal_animation": { "label": "Image reveal animation" },
+        "text_reveal_animation": { "label": "Text reveal animation" },
+        "image_hover_effect": { "label": "Image hover effect" },
+        "ambient_movement": { "label": "Enable subtle image movement" },
+        "animation_duration": { "label": "Reveal animation duration" },
+        "text_reveal_delay": { "label": "Text reveal delay" },
+        "slide_distance": { "label": "Slide distance" }
+      },
+      "options": {
+        "position": { "top": "Top", "middle": "Middle", "bottom": "Bottom" },
+        "alignment": { "left": "Left", "center": "Center", "right": "Right" },
+        "button_style": { "primary": "Primary", "secondary": "Secondary" },
+        "image_height": { "adapt": "Adapt to image", "small": "Small", "medium": "Medium", "large": "Large" },
+        "desktop_image_width": { "small": "Small (33%)", "medium": "Medium (50%)", "large": "Large (66%)" },
+        "animations": { "none": "None", "fade_in": "Fade in", "reveal_side": "Reveal from side", "fade_up": "Fade in & slide up" },
+        "hover": { "none": "None", "zoom_in": "Zoom in" }
+      },
+      "defaults": {
+        "heading": "Quiet the Digital Noise. Find Your Flow.",
+        "text": "<p>Spacewright's mission is to empower India's ambitious generation to combat digital fatigue and cultivate mental clarity. We provide a curated collection of tools for focus, play, and presence, helping our customers architect a more intentional and fulfilling inner world.</p>",
+        "button_label": "Discover Our Tools"
+      }
+    },
+    "hero-background-video": {
+      "name": "Hero background video",
+      "groups": {
+        "color_scheme": "Color scheme",
+        "typography": "Typography",
+        "content": "Content",
+        "mobile": "Mobile"
+      },
+      "settings": {
+        "height": { "label": "Section height" },
+        "content_align": { "label": "Content alignment" },
+        "content_position": { "label": "Content position" },
+        "overlay": { "label": "Overlay color" },
+        "overlay_opacity": { "label": "Overlay opacity" },
+        "headline_color": { "label": "Headline color" },
+        "subheadline_color": { "label": "Sub-headline color" },
+        "button_bg": { "label": "Button background color" },
+        "button_text": { "label": "Button text color" },
+        "headline_size": { "label": "Headline font size" },
+        "subheadline_size": { "label": "Sub-headline font size" },
+        "background_video": { "label": "Background video" },
+  "fallback_image": { "label": "Fallback image", "info": "Used as the poster and as the mobile background when video is disabled." },
+        "headline": { "label": "Headline" },
+        "subheadline": { "label": "Sub-headline" },
+        "button_label": { "label": "Button label" },
+        "button_link": { "label": "Button link" },
+        "disable_mobile": { "label": "Disable video on mobile" }
+      },
+      "options": {
+        "height": {
+          "small": "Small",
+          "medium": "Medium",
+          "large": "Large",
+          "adapt": "Adapt to first image"
+        },
+        "alignment": {
+          "left": "Left",
+          "center": "Center",
+          "right": "Right"
+        },
+        "position": {
+          "top": "Top",
+          "middle": "Middle",
+          "bottom": "Bottom"
+        }
+      }
+    },
+    "hero_banner": {
+      "name": "Hero banner",
+      "settings": {
+        "header_content": { "content": "Content" },
+        "image": { "label": "Image" },
+        "header_layout": { "content": "Layout" },
+        "section_height_mobile": { "label": "Section height (mobile)" },
+        "section_height_desktop": { "label": "Section height (desktop)" },
+        "header_styling": { "content": "Styling" },
+        "overlay_opacity": { "label": "Overlay opacity" },
+        "overlay_color": { "label": "Overlay color" },
+        "header_typography": { "content": "Typography" },
+        "heading": { "label": "Heading" },
+        "heading_font": { "label": "Heading font" },
+        "heading_size_mobile": { "label": "Heading font size (mobile)" },
+        "heading_size_desktop": { "label": "Heading font size (desktop)" },
+        "heading_color": { "label": "Heading color" },
+        "subheading": { "label": "Sub-headline" },
+        "subheading_font": { "label": "Sub-headline font" },
+        "subheading_size_mobile": { "label": "Sub-headline font size (mobile)" },
+        "subheading_size_desktop": { "label": "Sub-headline font size (desktop)" },
+        "subheading_color": { "label": "Sub-headline color" },
+        "header_button": { "content": "Button" },
+        "button_label": { "label": "Button label" },
+        "button_link": { "label": "Button link" },
+        "button_background": { "label": "Button background color" },
+        "button_text_color": { "label": "Button text color" }
+      }
+    },
     "all": {
       "animation": {
         "content": "Animations",

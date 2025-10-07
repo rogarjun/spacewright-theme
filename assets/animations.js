@@ -10,8 +10,18 @@ function onIntersection(elements, observer) {
       const elementTarget = element.target;
       if (elementTarget.classList.contains(SCROLL_ANIMATION_OFFSCREEN_CLASSNAME)) {
         elementTarget.classList.remove(SCROLL_ANIMATION_OFFSCREEN_CLASSNAME);
-        if (elementTarget.hasAttribute('data-cascade'))
-          elementTarget.setAttribute('style', `--animation-order: ${index};`);
+        // Preserve existing inline styles by setting only the CSS variable,
+        // instead of replacing the whole style attribute (which could wipe
+        // padding-bottom for media or any inline animation-delay we apply).
+        if (elementTarget.hasAttribute('data-cascade')) {
+          try {
+            elementTarget.style.setProperty('--animation-order', String(index));
+          } catch (e) {
+            // As a defensive fallback, append to the style attribute without overriding existing rules
+            const prev = elementTarget.getAttribute('style') || '';
+            elementTarget.setAttribute('style', `${prev}; --animation-order: ${index};`);
+          }
+        }
       }
       observer.unobserve(elementTarget);
     } else {
@@ -25,10 +35,49 @@ function initializeScrollAnimationTrigger(rootEl = document, isDesignModeEvent =
   const animationTriggerElements = Array.from(rootEl.getElementsByClassName(SCROLL_ANIMATION_TRIGGER_CLASSNAME));
   if (animationTriggerElements.length === 0) return;
 
-  if (isDesignModeEvent) {
-    animationTriggerElements.forEach((element) => {
-      element.classList.add('scroll-trigger--design-mode');
+  const isInViewport = (el) => {
+    const r = el.getBoundingClientRect();
+    return (
+      r.bottom > 0 &&
+      r.right > 0 &&
+      r.left < (window.innerWidth || document.documentElement.clientWidth) &&
+      r.top < (window.innerHeight || document.documentElement.clientHeight)
+    );
+  };
+
+  const revealVisible = (elements) => {
+    elements.forEach((el) => {
+      if (el.classList && el.classList.contains(SCROLL_ANIMATION_OFFSCREEN_CLASSNAME) && isInViewport(el)) {
+        el.classList.remove(SCROLL_ANIMATION_OFFSCREEN_CLASSNAME);
+      }
     });
+  };
+
+  if (isDesignModeEvent) {
+    const allowed = [];
+    animationTriggerElements.forEach((element) => {
+      const allowInEditor = element.closest('[data-allow-animations-in-editor="true"]');
+      if (!allowInEditor) {
+        element.classList.add('scroll-trigger--design-mode');
+      } else {
+        element.classList.remove('scroll-trigger--design-mode');
+        allowed.push(element);
+      }
+    });
+    if (allowed.length === 0) return;
+    const observer = new IntersectionObserver(onIntersection, {
+      rootMargin: '0px 0px -50px 0px',
+    });
+    allowed.forEach((element) => observer.observe(element));
+
+    // Fallback: if observer doesn't fire quickly in editor, reveal in-viewport items
+    setTimeout(() => {
+      revealVisible(allowed);
+    }, 800);
+
+    // Re-check on resize in the editor (e.g., switching to mobile viewport)
+    const onResize = throttle(() => revealVisible(allowed), 150);
+    window.addEventListener('resize', onResize, { passive: true });
     return;
   }
 
@@ -36,6 +85,15 @@ function initializeScrollAnimationTrigger(rootEl = document, isDesignModeEvent =
     rootMargin: '0px 0px -50px 0px',
   });
   animationTriggerElements.forEach((element) => observer.observe(element));
+
+  // Fallback for cases where the observer doesn't fire due to nested scroll/iframes
+  setTimeout(() => {
+    revealVisible(animationTriggerElements);
+  }, 800);
+
+  // Also retry reveal on window resize for live previews
+  const onResize = throttle(() => revealVisible(animationTriggerElements), 150);
+  window.addEventListener('resize', onResize, { passive: true });
 }
 
 // Zoom in animation logic
@@ -99,4 +157,9 @@ window.addEventListener('DOMContentLoaded', () => {
 if (Shopify.designMode) {
   document.addEventListener('shopify:section:load', (event) => initializeScrollAnimationTrigger(event.target, true));
   document.addEventListener('shopify:section:reorder', () => initializeScrollAnimationTrigger(document, true));
+  document.addEventListener('shopify:section:select', (event) => initializeScrollAnimationTrigger(event.target, true));
+  document.addEventListener('shopify:section:deselect', (event) =>
+    initializeScrollAnimationTrigger(event.target, true)
+  );
+  document.addEventListener('shopify:section:unload', () => initializeScrollAnimationTrigger(document, true));
 }

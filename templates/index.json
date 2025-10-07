@@ -9,87 +9,27 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ],
+    "hero_background_video_hw7zwU": {
+      "type": "hero-background-video",
+      "name": "t:sections.hero-background-video.name",
       "settings": {
-        "image": "shopify://shop_images/Hero_Image_5.png",
-        "image_overlay_opacity": 0,
-        "image_height": "large",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-1",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
-    "rich_text_qTYUim": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_xmKXyE": {
-          "type": "heading",
-          "settings": {
-            "heading": "Talk about your brand",
-            "heading_size": "h1"
-          }
-        },
-        "text_haLnVw": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
-          }
-        },
-        "button_Gfc3fq": {
-          "type": "button",
-          "settings": {
-            "button_label": "Button label",
-            "button_link": "",
-            "button_style_secondary": false,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_xmKXyE",
-        "text_haLnVw",
-        "button_Gfc3fq"
-      ],
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
+        "height": "hero-video--large",
+        "content_align": "align-center",
+        "content_position": "pos-bottom",
+        "overlay": "#000000",
+        "overlay_opacity": 30,
+        "headline_color": "#f9f7f5",
+        "subheadline_color": "#f9f7f5",
+        "button_bg": "#1a2a44",
+        "button_text": "#f9f7f5",
+        "headline_size": 56,
+        "subheadline_size": 18,
+        "background_video": "shopify://files/videos/AI_Generates_Spacewright_Hero_Section_Video.mp4",
+        "headline": "",
+        "subheadline": "<p>A curated collection of tools to spark creativity and help you find your space.</p>",
+        "button_label": "Explore the Collection",
+        "button_link": "",
+        "disable_mobile": false
       }
     },
     "featured_collection": {
@@ -97,7 +37,7 @@
       "settings": {
         "collection": "all",
         "products_to_show": 8,
-        "title": "Featured products",
+        "title": "Featured Collections",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
@@ -120,154 +60,39 @@
         "padding_bottom": 36
       }
     },
-    "image_with_text_FiwGPR": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_RAbkMg": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image with text",
-            "heading_size": "h1"
-          }
-        },
-        "text_VwRfFc": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "text_style": "body"
-          }
-        },
-        "button_Qh8jbk": {
-          "type": "button",
-          "settings": {
-            "button_label": "Button label",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_RAbkMg",
-        "text_VwRfFc",
-        "button_Qh8jbk"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
+    "brand_mission_QKDeci": {
+      "type": "brand-mission",
+      "name": "t:sections.brand-mission.name",
       "settings": {
-        "height": "adapt",
+        "image": "shopify://shop_images/Hero_Image_23.png",
+        "layout": "image_left",
+        "mobile_layout": "image_first",
+        "content_position": "middle",
+        "color_scheme": "scheme-1",
+        "text_color_scheme": "scheme-1",
+        "image_height": "adapt",
         "desktop_image_width": "medium",
-        "layout": "image_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "center",
-        "mobile_content_alignment": "center",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "image_with_text_4LAeBg": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_hzedTd": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image with text",
-            "heading_size": "h1"
-          }
-        },
-        "text_RrYhdg": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "text_style": "body"
-          }
-        },
-        "button_kVr4YX": {
-          "type": "button",
-          "settings": {
-            "button_label": "Button label",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_hzedTd",
-        "text_RrYhdg",
-        "button_kVr4YX"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "image_behavior": "zoom-in",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "center",
-        "mobile_content_alignment": "center",
-        "section_color_scheme": "scheme-3",
-        "color_scheme": "scheme-3",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "image_with_text_Ey3phM": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading_WgNBkt": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image with text",
-            "heading_size": "h1"
-          }
-        },
-        "text_WtCdUF": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
-            "text_style": "body"
-          }
-        },
-        "button_JjFtHb": {
-          "type": "button",
-          "settings": {
-            "button_label": "Button label",
-            "button_link": "",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": [
-        "heading_WgNBkt",
-        "text_WtCdUF",
-        "button_JjFtHb"
-      ],
-      "name": "t:sections.image-with-text.presets.name",
-      "settings": {
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "image_behavior": "none",
-        "content_layout": "no-overlap",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "center",
-        "mobile_content_alignment": "center",
-        "section_color_scheme": "",
-        "color_scheme": "",
-        "padding_top": 0,
-        "padding_bottom": 0
+        "heading": "Quiet the Digital Noise. Find Your Flow.",
+        "text": "<p>Spacewright's mission is to empower India's ambitious generation to combat digital fatigue and cultivate mental clarity. We provide a curated collection of tools for focus, play, and presence, helping our customers architect a more intentional and fulfilling inner world.</p>",
+        "text_alignment": "left",
+        "button_label": "Discover Our Tools",
+        "button_link": "",
+        "button_style": "primary",
+        "image_reveal_animation": "reveal_side",
+        "text_reveal_animation": "fade_up",
+        "image_hover_effect": "zoom_in",
+        "ambient_movement": false,
+        "animation_duration": 1600,
+        "text_reveal_delay": 400,
+        "slide_distance": 5.5,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     }
   },
   "order": [
-    "image_banner",
-    "rich_text_qTYUim",
+    "hero_background_video_hw7zwU",
     "featured_collection",
-    "image_with_text_FiwGPR",
-    "image_with_text_4LAeBg",
-    "image_with_text_Ey3phM"
+    "brand_mission_QKDeci"
   ]
 }
