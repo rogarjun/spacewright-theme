@@ -375,6 +375,9 @@
   "sections": {
     "brand-mission": {
       "name": "Brand mission",
+      "presets": {
+        "name": "Brand mission"
+      },
       "groups": {
         "text": "Text content",
         "button": "Button",
