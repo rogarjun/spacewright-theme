@@ -1,0 +1,218 @@
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .featured-content--align-center .card__information,
+  .featured-content--align-center .article-card__info,
+  .featured-content--align-center .article-card__excerpt,
+  .featured-content--align-center .article-card__footer {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign blog_obj = section.settings.blog
+  assign limit = section.settings.posts_to_show | default: 3
+  assign posts_count = 0
+  if blog_obj != blank
+    assign posts_count = blog_obj.articles_count
+  endif
+
+  assign show_view_all_btn = false
+  if section.settings.show_view_all and blog_obj != blank and posts_count > limit
+    assign show_view_all_btn = true
+  endif
+-%}
+
+<div class="featured-content color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    {%- unless section.settings.heading == blank -%}
+      <div class="title-wrapper-with-link title-wrapper--no-top-margin">
+        <h2 class="inline-richtext h1">{{ section.settings.heading }}</h2>
+        {%- if show_view_all_btn -%}
+          <a href="{{ blog_obj.url }}" class="link underlined-link large-up-hide">
+            {{- section.settings.view_all_label -}}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+
+    <ul
+      class="articles-wrapper contains-card contains-card--article grid grid--2-col-tablet grid--{{ section.settings.columns_desktop }}-col-desktop{% if section.settings.text_alignment == 'center' %} featured-content--align-center{% endif %}"
+      role="list"
+    >
+      {%- if blog_obj != blank and posts_count > 0 -%}
+        {%- for article in blog_obj.articles limit: limit -%}
+          {%- liquid
+            assign ratio = 1
+            if section.settings.image_ratio == 'square'
+              assign ratio = 1
+            elsif section.settings.image_ratio == 'portrait'
+              assign ratio = 0.8
+            else
+              if article.image
+                assign ratio = article.image.aspect_ratio
+              else
+                assign ratio = 1
+              endif
+            endif
+          -%}
+          <li class="grid__item article">
+            {% render 'article-card',
+              blog: blog_obj,
+              article: article,
+              media_aspect_ratio: ratio,
+              show_image: section.settings.show_image,
+              show_date: section.settings.show_date,
+              show_author: section.settings.show_author,
+              show_excerpt: section.settings.show_excerpt
+            %}
+          </li>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..limit) -%}
+          {%- assign placeholder_image_index = forloop.index0 | modulo: 3 | plus: 1 -%}
+          {%- assign placeholder_image = 'blog-apparel-' | append: placeholder_image_index -%}
+          <li class="grid__item article">
+            <div class="article-card-wrapper card-wrapper">
+              <div class="card article-card card--{{ settings.blog_card_style }} {% if settings.blog_card_style == 'card' %}color-{{ settings.blog_card_color_scheme }} gradient{% endif %} {% if section.settings.show_image %}card--media{% else %}card--text{% endif %}">
+                <div
+                  class="card__inner{% if settings.blog_card_style == 'standard' %} color-{{ settings.blog_card_color_scheme }} gradient{% endif %} ratio"
+                  style="--ratio-percent: 100%;"
+                >
+                  {%- if section.settings.show_image -%}
+                    <div class="article-card__image-wrapper card__media">
+                      <div class="article-card__image media">
+                        {{ placeholder_image | placeholder_svg_tag: 'blog-placeholder-svg' }}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                  <div class="card__content">
+                    <div class="card__information">
+                      <h3 class="card__heading h2">{{ 'sections.featured_blog.onboarding_title' | t }}</h3>
+                      {%- if section.settings.show_excerpt -%}
+                        <p class="article-card__excerpt rte-width">
+                          {{ 'sections.featured_blog.onboarding_content' | t }}
+                        </p>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+                <div class="card__content">
+                  <div class="card__information">
+                    <h3 class="card__heading h2">{{ 'sections.featured_blog.onboarding_title' | t }}</h3>
+                    {%- if section.settings.show_excerpt -%}
+                      <p class="article-card__excerpt rte-width">
+                        {{ 'sections.featured_blog.onboarding_content' | t }}
+                      </p>
+                    {%- endif -%}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+
+    {%- if show_view_all_btn -%}
+      <div class="center small-hide medium-hide">
+        <a href="{{ blog_obj.url }}" class="button">{{ section.settings.view_all_label }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured content",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "From Our Journal" },
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    { "type": "range", "id": "posts_to_show", "label": "Posts to show", "min": 2, "max": 6, "step": 1, "default": 3 },
+
+    { "type": "header", "content": "Layout & styling" },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "adapt", "label": "Adapt to image" },
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "square", "label": "Square" }
+      ],
+      "default": "adapt"
+    },
+
+    { "type": "header", "content": "Article card content" },
+    { "type": "checkbox", "id": "show_image", "label": "Show image", "default": true },
+    { "type": "checkbox", "id": "show_date", "label": "Show publish date", "default": true },
+    { "type": "checkbox", "id": "show_author", "label": "Show author", "default": false },
+    { "type": "checkbox", "id": "show_excerpt", "label": "Show excerpt", "default": true },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    },
+
+    { "type": "header", "content": "View all button" },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show 'View all' button", "default": true },
+    { "type": "text", "id": "view_all_label", "label": "Button label", "default": "View All" },
+
+    { "type": "header", "content": "Section padding" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "presets": [{ "name": "Featured content" }]
+}
+{% endschema %}
