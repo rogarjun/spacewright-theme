@@ -31,92 +31,6 @@
         },
         "thickness": {
           "label": "Thickness"
-        },
-        "opacity": {
-          "label": "Opacity"
-        },
-        "image_padding": {
-          "label": "Image padding"
-        },
-        "text_alignment": {
-          "options__1": {
-            "label": "Left"
-          },
-          "options__2": {
-            "label": "Center"
-          },
-          "options__3": {
-            "label": "Right"
-          },
-          "label": "Text alignment"
-        }
-      }
-    },
-    "cards": {
-      "name": "Product cards",
-      "settings": {
-        "style": {
-          "options__1": {
-            "label": "Standard"
-          },
-          "options__2": {
-            "label": "Card"
-          },
-          "label": "Style"
-        }
-      }
-    },
-    "collection_cards": {
-      "name": "Collection cards",
-      "settings": {
-        "style": {
-          "options__1": {
-            "label": "Standard"
-          },
-          "options__2": {
-            "label": "Card"
-          },
-          "label": "Style"
-        }
-      }
-    },
-    "blog_cards": {
-      "name": "Blog cards",
-      "settings": {
-        "style": {
-          "options__1": {
-            "label": "Standard"
-          },
-          "options__2": {
-            "label": "Card"
-          },
-          "label": "Style"
-        }
-      }
-    },
-    "badges": {
-      "name": "Badges",
-      "settings": {
-        "position": {
-          "options__1": {
-            "label": "Bottom left"
-          },
-          "options__2": {
-            "label": "Bottom right"
-          },
-          "options__3": {
-            "label": "Top left"
-          },
-          "options__4": {
-            "label": "Top right"
-          },
-          "label": "Position on cards"
-        },
-        "sale_badge_color_scheme": {
-          "label": "Sale badge color scheme"
-        },
-        "sold_out_badge_color_scheme": {
-          "label": "Sold out badge color scheme"
         }
       }
     },
@@ -605,7 +519,9 @@
       "padding": {
         "section_padding_heading": "Padding",
         "padding_top": "Top",
-        "padding_bottom": "Bottom"
+        "padding_bottom": "Bottom",
+        "padding_y": "Vertical padding",
+        "padding_x": "Horizontal padding"
       },
       "spacing": "Spacing",
       "colors": {
@@ -1367,6 +1283,54 @@
         "enable_customer_avatar": {
           "label": "Customer account avatar",
           "info": "Only visible when customers are signed in with Shop. [Manage customer accounts](/admin/settings/customer_accounts)"
+        },
+        "padding_y": { "label": "Vertical padding" },
+        "padding_x": { "label": "Horizontal padding" },
+        "mobile_drawer_color_scheme": { "label": "Mobile drawer color scheme" },
+        "header__animations": { "content": "Animations" },
+        "animate_icons": { "label": "Icon animations" },
+        "underline_on_hover": { "label": "Underline links on hover" },
+        "mega_panel_styling": { "content": "Mega menu panel styling" },
+        "mega_panel_bg_image": { "label": "Background image" },
+        "mega_panel_bg_color": { "label": "Background color" },
+        "mega_panel_bg_opacity": { "label": "Background color opacity" },
+        "header_typography": { "content": "Header typography" },
+        "nav_font_size": { "label": "Main navigation font size" },
+        "nav_font": { "label": "Navigation font" },
+        "nav_link_color": { "label": "Navigation link color" },
+        "nav_link_hover_color": { "label": "Navigation link hover color" },
+        "nav_text_transform": {
+          "label": "Navigation text transform",
+          "options__1": { "label": "None" },
+          "options__2": { "label": "Uppercase" },
+          "options__3": { "label": "Capitalize" }
+        },
+        "nav_font_weight": { "label": "Main navigation font weight", "options__1": { "label": "Normal" }, "options__2": { "label": "Bold" } },
+        "mega_title_font_size": { "label": "Mega menu column title font size" },
+        "mega_title_font_weight": { "label": "Mega menu column title font weight", "options__1": { "label": "Normal" }, "options__2": { "label": "Bold" } },
+        "mega_menu_width": { "label": "Mega menu width", "options__1": { "label": "Auto" }, "options__2": { "label": "Full screen width" } }
+      },
+      "blocks": {
+        "simple_link": {
+          "name": "Simple link",
+          "settings": {
+            "label": { "label": "Label" },
+            "link": { "label": "Link" },
+            "url": "Link"
+          }
+        },
+        "mega_menu": {
+          "name": "Mega menu",
+          "settings": {
+            "label": { "label": "Label" },
+            "link_column_1": { "label": "Link column 1" },
+            "link_column_2": { "label": "Link column 2" },
+            "link_column_3": { "label": "Link column 3" },
+            "promo_header": { "content": "Promotional column" },
+            "featured_image": { "label": "Featured image" },
+            "featured_heading": { "label": "Featured heading" },
+            "image_link": { "label": "Image link" }
+          }
         }
       }
     },

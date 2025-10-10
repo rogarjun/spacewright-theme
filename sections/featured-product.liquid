@@ -483,13 +483,10 @@
     <script src="{{ 'product-model.js' | asset_url }}" defer></script>
   {%- endif -%}
 
-  {%- liquid
-    if product.selected_or_first_available_variant.featured_media
-      assign seo_media = product.selected_or_first_available_variant.featured_media
-    else
-      assign seo_media = product.featured_media
-    endif
-  -%}
+  {%- comment -%}
+    Removed unused seo_media assignment (triggered UnusedAssign).
+    If needed in the future, reintroduce and consume it where appropriate.
+  {%- endcomment -%}
 
   <script type="application/ld+json">
     {{ product | structured_data }}

@@ -1,0 +1,115 @@
+{% # theme-check-disable OrphanedSnippet %}
+{% doc %}
+  Renders a single navigation block for the header. Supports "simple_link" and the upgraded "mega_menu" with
+  three link columns and an optional promotional column.
+
+  @param {block} block - The section block to render
+
+  Notes: - This snippet relies on header section CSS for styles and behavior. - The mega panel uses section-level
+  settings for background image/color and typography variables.
+{% enddoc %}
+
+{% liquid
+  assign type = block.type
+%}
+
+{% case type %}
+  {% when 'simple_link' %}
+    <li class="nav-item nav-item--link" {{ block.shopify_attributes }}>
+      <a class="nav-link" href="{{ block.settings.link | default: '#' }}">{{ block.settings.label | escape }}</a>
+    </li>
+
+  {% when 'mega_menu' %}
+    <li class="nav-item nav-item--mega" {{ block.shopify_attributes }}>
+      <a class="nav-link" href="#" aria-haspopup="true" aria-expanded="false">
+        {{ block.settings.label | escape }}
+        <span class="svg-wrapper" aria-hidden="true">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+      </a>
+      <div class="mega-panel" role="group">
+        <div class="mega-panel__inner page-width">
+          <div class="mega-panel__grid">
+            {%- assign col1 = block.settings.link_column_1 -%}
+            {%- assign col2 = block.settings.link_column_2 -%}
+            {%- assign col3 = block.settings.link_column_3 -%}
+
+            {%- if col1 != blank and linklists[col1] -%}
+              <div class="mega-col">
+                {%- if linklists[col1].title != blank -%}
+                  <p class="mega-col__title">
+                    <a class="mega-col__link" href="{{ linklists[col1].url }}">{{ linklists[col1].title | escape }}</a>
+                  </p>
+                {%- endif -%}
+                <ul class="mega-col__list" role="list">
+                  {%- for l in linklists[col1].links -%}
+                    <li>
+                      <a class="mega-col__link" href="{{ l.url }}">{{ l.title | escape }}</a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+
+            {%- if col2 != blank and linklists[col2] -%}
+              <div class="mega-col">
+                {%- if linklists[col2].title != blank -%}
+                  <p class="mega-col__title">
+                    <a class="mega-col__link" href="{{ linklists[col2].url }}">{{ linklists[col2].title | escape }}</a>
+                  </p>
+                {%- endif -%}
+                <ul class="mega-col__list" role="list">
+                  {%- for l in linklists[col2].links -%}
+                    <li>
+                      <a class="mega-col__link" href="{{ l.url }}">{{ l.title | escape }}</a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+
+            {%- if col3 != blank and linklists[col3] -%}
+              <div class="mega-col">
+                {%- if linklists[col3].title != blank -%}
+                  <p class="mega-col__title">
+                    <a class="mega-col__link" href="{{ linklists[col3].url }}">{{ linklists[col3].title | escape }}</a>
+                  </p>
+                {%- endif -%}
+                <ul class="mega-col__list" role="list">
+                  {%- for l in linklists[col3].links -%}
+                    <li>
+                      <a class="mega-col__link" href="{{ l.url }}">{{ l.title | escape }}</a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.featured_image != blank or block.settings.featured_heading != blank -%}
+              <div class="mega-col mega-col--promo">
+                {%- assign promo_link = block.settings.image_link | default: '#' -%}
+                {%- if block.settings.featured_image != blank -%}
+                  <a class="mega-promo__image" href="{{ promo_link }}">
+                    {{
+                      block.settings.featured_image
+                      | image_url: width: 600
+                      | image_tag: loading: 'lazy', alt: block.settings.featured_heading
+                      | escape
+                    }}
+                  </a>
+                {%- endif -%}
+                {%- if block.settings.featured_heading != blank -%}
+                  <p class="mega-promo__heading">
+                    <a class="mega-col__link" href="{{ promo_link }}">{{ block.settings.featured_heading | escape }}</a>
+                  </p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </li>
+
+  {% else %}
+    <li class="nav-item" {{ block.shopify_attributes }}>
+      <span class="nav-link">{{ block.settings.label | default: 'Item' | escape }}</span>
+    </li>
+{% endcase %}
