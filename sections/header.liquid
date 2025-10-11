@@ -722,3 +722,65 @@
   ]
 }
 {% endschema %}
+
+<script>
+  // Desktop-only hover to open mega menus by simulating native clicks (with delay)
+  (function () {
+    function enableHoverOpen() {
+      if (window.innerWidth < 990) return; // mobile/tablet: no-op
+      var root = document.querySelector('.header__inline-menu');
+      if (!root) return;
+
+      // target dropdown parents in inline menu
+      var parents = root.querySelectorAll('header-menu > details');
+      parents.forEach(function (d) {
+        var summary = d.querySelector('summary.header__menu-item');
+        if (!summary) return;
+
+        // Avoid stacking multiple listeners across re-runs
+        if (!d.__hoverBound) {
+          var openDelay = 120;   // ms before opening
+          var closeDelay = 200;  // ms before closing (slightly longer to forgive minor cursor misses)
+          var openTimer = null;
+          var closeTimer = null;
+
+          function clearTimers() {
+            if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+            if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+          }
+
+          d.addEventListener('mouseenter', function () {
+            if (window.innerWidth < 990) return;
+            clearTimers();
+            if (!d.open) {
+              openTimer = setTimeout(function () {
+                // If still hovered and still closed, open via native click
+                if (!d.open) summary.click();
+              }, openDelay);
+            }
+          });
+
+          d.addEventListener('mouseleave', function () {
+            if (window.innerWidth < 990) return;
+            clearTimers();
+            if (d.open) {
+              closeTimer = setTimeout(function () {
+                if (d.open) summary.click();
+              }, closeDelay);
+            }
+          });
+          d.__hoverBound = true;
+        }
+      });
+    }
+
+    // Run on load and on resize debounced
+    var ro;
+    window.addEventListener('load', enableHoverOpen);
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(enableHoverOpen, 150);
+    });
+  })();
+</script>

@@ -2889,6 +2889,72 @@ details-disclosure > details {
   position: relative;
 }
 
+/* --------------------------------------------------
+   Header: unify top-level link appearance and hover
+   -------------------------------------------------- */
+/* Top-level items: simple links (<a>) and mega triggers (<summary>) */
+.header__inline-menu .list-menu--inline > li > a.header__menu-item,
+.header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item {
+  font-weight: 500;
+  position: relative;
+  text-decoration: none;
+}
+
+/* Remove default underline behaviors for top-level items (we'll use an animated bar) */
+.header__inline-menu .list-menu--inline > li > a.header__menu-item span,
+.header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item span,
+.header__inline-menu .list-menu--inline > li > a.header__menu-item:hover span,
+.header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item:hover span,
+.header__inline-menu .list-menu--inline > li > header-menu > details[open] > summary.header__menu-item {
+  text-decoration: none !important;
+}
+
+/* Disable parent underline to avoid including padding/caret space */
+.header__inline-menu .list-menu--inline > li > a.header__menu-item::after,
+.header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item::after {
+  content: none;
+}
+
+/* Underline tied to text only: use inner span */
+.header__inline-menu .list-menu--inline > li > a.header__menu-item > span,
+.header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item > span {
+  position: relative;
+  display: inline-block;
+}
+
+/* Animated underline on span: hidden by default */
+.header__inline-menu .list-menu--inline > li > a.header__menu-item > span::after,
+.header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item > span::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.2rem;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.35s ease;
+}
+
+/* Reveal underline on hover and when open */
+.header__inline-menu .list-menu--inline > li > a.header__menu-item:hover > span::after,
+.header__inline-menu .list-menu--inline > li > header-menu > details > summary.header__menu-item:hover > span::after,
+.header__inline-menu .list-menu--inline > li > header-menu > details[open] > summary.header__menu-item > span::after {
+  transform: scaleX(1);
+}
+
+/* Hide caret on desktop; keep it for mobile for affordance */
+@media screen and (min-width: 990px) {
+  .header__inline-menu .icon-caret {
+    display: none !important;
+  }
+  /* Normalize desktop summary right padding (caret removed) */
+  .header__inline-menu summary.header__menu-item.list-menu__item {
+    padding-right: 1.2rem !important;
+  }
+}
+
 @keyframes animateMenuOpen {
   0% {
     opacity: 0;
