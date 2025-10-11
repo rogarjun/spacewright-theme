@@ -37,21 +37,70 @@
     },
     "header": {
       "type": "header",
+      "blocks": {
+        "mega_menu_Gr8pT6": {
+          "type": "mega_menu",
+          "settings": {
+            "label": "Mindful",
+            "link_column_1": "main-menu-1",
+            "link_column_2": "footer",
+            "link_column_3": "customer-account-main-menu",
+            "featured_image": "shopify://shop_images/Hero_Image_34.png",
+            "featured_heading": "Space for you Mindful Tech!",
+            "image_link": ""
+          }
+        },
+        "mega_menu_xfh7p4": {
+          "type": "mega_menu",
+          "settings": {
+            "label": "Focus",
+            "link_column_1": "main-menu-1",
+            "link_column_2": "footer",
+            "link_column_3": "customer-account-main-menu",
+            "featured_image": "shopify://shop_images/Hero_Image_7.png",
+            "featured_heading": "Space for your Playful Focus!",
+            "image_link": ""
+          }
+        },
+        "mega_menu_Q4Lz4R": {
+          "type": "mega_menu",
+          "settings": {
+            "label": "Spiritual",
+            "link_column_1": "main-menu-1",
+            "link_column_2": "footer",
+            "link_column_3": "customer-account-main-menu",
+            "featured_image": "shopify://shop_images/Hero_Image_0.png",
+            "featured_heading": "Space for your Modern Ritual!",
+            "image_link": ""
+          }
+        },
+        "simple_link_TnPLke": {
+          "type": "simple_link",
+          "settings": {
+            "label": "About Us",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_Gr8pT6",
+        "mega_menu_xfh7p4",
+        "mega_menu_Q4Lz4R",
+        "simple_link_TnPLke"
+      ],
       "settings": {
         "logo_position": "middle-left",
-        "mobile_logo_position": "center",
-        "menu": "main-menu-1",
-        "menu_type_desktop": "mega",
-        "sticky_header_type": "reduce-logo-size",
-        "show_line_separator": true,
         "color_scheme": "scheme-1",
-        "menu_color_scheme": "scheme-1",
-        "enable_country_selector": true,
-        "enable_language_selector": true,
-        "enable_customer_avatar": true,
-        "margin_bottom": 0,
-        "padding_top": 0,
-        "padding_bottom": 0
+        "mobile_drawer_color_scheme": "",
+        "sticky_mode": "none",
+        "animate_icons": false,
+        "mega_panel_bg_color": "#eae3d9",
+        "mega_panel_bg_opacity": 0.6,
+        "nav_font_size": 16,
+        "nav_font": "poppins_n4",
+        "nav_font_weight": "400",
+        "mega_title_font_size": 16,
+        "mega_title_font_weight": "700"
       }
     }
   },
