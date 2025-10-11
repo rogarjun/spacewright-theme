@@ -7,6 +7,18 @@
   assign total_blocks = section.blocks.size
   assign left_count = total_blocks | divided_by: 2
 -%}
+-%}
+
+{%- comment -%}
+  Inline custom properties, scoped to this section wrapper
+{%- endcomment -%}
+<style>
+  #shopify-section-{{ section.id }} {
+    {% if section.settings.nav_font != blank %}
+      --font-navigation: {{ section.settings.nav_font.family | json }}, {{ section.settings.nav_font.fallback_families }};
+    {% endif %}
+  }
+</style>
 
 {%- capture header_logo -%}
   {%- if request.page_type == 'index' -%}<h1 class="header__heading">{%- endif -%}
@@ -59,19 +71,14 @@
 
 <{{ header_tag }} class="section-header">
   <header
-    class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_divider %} header-wrapper--divider{% endif %}"
+    class="header-wrapper color-{{ section.settings.color_scheme }} gradient"
     style="
-          --nav-font-size: {{ section.settings.nav_font_size }}px;
-          --nav-font-weight: {{ section.settings.nav_font_weight }};
-          --mega-title-size: {{ section.settings.mega_title_font_size }}px;
-          --mega-title-weight: {{ section.settings.mega_title_font_weight }};
-          --mega-bg-color: {% if section.settings.mega_panel_bg_color != blank %}rgba({{ section.settings.mega_panel_bg_color | color_to_rgb | remove: 'rgb(' | remove: ')' }}, {{ section.settings.mega_panel_bg_opacity | default: 0 }}){% else %}transparent{% endif %};
-          {% if section.settings.mega_panel_bg_image != blank %}--mega-bg-image: url({{ section.settings.mega_panel_bg_image | image_url: width: 2000 }});{% else %}--mega-bg-image: none;{% endif %}
-      {% if section.settings.nav_font != blank and section.settings.nav_font.family != settings.type_header_font.family %}--nav-font-family: {{ section.settings.nav_font.family | json }}, {{ section.settings.nav_font.fallback_families }};{% endif %}
-          {% if section.settings.nav_link_color != blank %}--nav-color: {{ section.settings.nav_link_color }};{% endif %}
-          {% if section.settings.nav_link_hover_color != blank %}--nav-hover-color: {{ section.settings.nav_link_hover_color }};{% endif %}
-          --nav-text-transform: {% case section.settings.nav_text_transform %}{% when 'none' %}none{% when 'capitalize' %}capitalize{% else %}uppercase{% endcase %};
-          --nav-letter-spacing: {% if section.settings.nav_text_transform == 'uppercase' %}1.5px{% else %}normal{% endif %};
+      --nav-font-size: {{ section.settings.nav_font_size }}px;
+      --nav-font-weight: {{ section.settings.nav_font_weight }};
+      --mega-title-size: {{ section.settings.mega_title_font_size }}px;
+      --mega-title-weight: {{ section.settings.mega_title_font_weight }};
+      --mega-bg-color: {% if section.settings.mega_panel_bg_color != blank %}rgba({{ section.settings.mega_panel_bg_color | color_to_rgb | remove: 'rgb(' | remove: ')' }}, {{ section.settings.mega_panel_bg_opacity | default: 0 }}){% else %}transparent{% endif %};
+      {% if section.settings.mega_panel_bg_image != blank %}--mega-bg-image: url({{ section.settings.mega_panel_bg_image | image_url: width: 2000 }});{% else %}--mega-bg-image: none;{% endif %}
     "
   >
     {% if section.settings.nav_font != blank and section.settings.nav_font.family != settings.type_header_font.family %}
@@ -81,7 +88,6 @@
     {% endif %}
     <div
       class="header page-width header--{{ section.settings.logo_position }}"
-      style="--pad-y: {{ section.settings.padding_y }}px; --pad-x: {{ section.settings.padding_x }}px;"
     >
       {%- if layout_mode == 'center' -%}
         <div class="header__side header__side--left">{{ desktop_nav_left }}</div>
@@ -258,7 +264,7 @@
   .header {
     display: grid;
     grid-template-columns: 1fr;
-    padding: var(--pad-y) var(--pad-x);
+    padding: 16px 16px;
     align-items: center;
   }
   .header--top-center,
@@ -317,20 +323,18 @@
     align-items: center;
     gap: 0.4rem;
     text-decoration: none;
-    color: var(--nav-color, currentColor);
+    color: currentColor;
     font-size: var(--nav-font-size, 16px);
     font-weight: var(--nav-font-weight, 400);
     padding: 0.6rem 0; /* vertical hit area */
-    font-family: var(--nav-font-family, var(--font-heading-family));
-    text-transform: var(--nav-text-transform, uppercase);
-    letter-spacing: var(--nav-letter-spacing, normal);
+    font-family: var(--font-navigation, var(--font-heading-family));
   }
   .nav-link:visited {
-    color: var(--nav-color, currentColor);
+    color: currentColor;
   }
   .nav-link:hover,
   .nav-link:focus {
-    color: var(--nav-hover-color, var(--nav-color, currentColor));
+    color: currentColor;
   }
   .mega-panel {
     position: absolute;
@@ -571,26 +575,7 @@
         { "value": "middle-center", "label": "t:sections.header.settings.logo_position.options__4.label" }
       ]
     },
-    {
-      "type": "range",
-      "id": "padding_y",
-      "label": "t:sections.all.padding.padding_y",
-      "min": 0,
-      "max": 48,
-      "step": 2,
-      "unit": "px",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "padding_x",
-      "label": "t:sections.all.padding.padding_x",
-      "min": 0,
-      "max": 48,
-      "step": 2,
-      "unit": "px",
-      "default": 16
-    },
+
     {
       "type": "color_scheme",
       "id": "color_scheme",
@@ -602,12 +587,6 @@
       "id": "mobile_drawer_color_scheme",
       "label": "t:sections.header.settings.mobile_drawer_color_scheme.label",
       "default": "scheme-1"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_divider",
-      "label": "t:sections.header.settings.show_line_separator.label",
-      "default": false
     },
     {
       "type": "select",
@@ -628,12 +607,6 @@
       "id": "animate_icons",
       "label": "t:sections.header.settings.animate_icons.label",
       "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "underline_on_hover",
-      "label": "t:sections.header.settings.underline_on_hover.label",
-      "default": true
     },
     { "type": "header", "content": "t:sections.header.settings.mega_panel_styling.content" },
     {
@@ -668,27 +641,7 @@
       "label": "t:sections.header.settings.nav_font.label",
       "default": "assistant_n4"
     },
-    {
-      "type": "color",
-      "id": "nav_link_color",
-      "label": "t:sections.header.settings.nav_link_color.label"
-    },
-    {
-      "type": "color",
-      "id": "nav_link_hover_color",
-      "label": "t:sections.header.settings.nav_link_hover_color.label"
-    },
-    {
-      "type": "select",
-      "id": "nav_text_transform",
-      "label": "t:sections.header.settings.nav_text_transform.label",
-      "default": "uppercase",
-      "options": [
-        { "value": "none", "label": "t:sections.header.settings.nav_text_transform.options__1.label" },
-        { "value": "uppercase", "label": "t:sections.header.settings.nav_text_transform.options__2.label" },
-        { "value": "capitalize", "label": "t:sections.header.settings.nav_text_transform.options__3.label" }
-      ]
-    },
+
     {
       "type": "select",
       "id": "nav_font_weight",
@@ -717,16 +670,6 @@
       "options": [
         { "value": "400", "label": "t:sections.header.settings.mega_title_font_weight.options__1.label" },
         { "value": "700", "label": "t:sections.header.settings.mega_title_font_weight.options__2.label" }
-      ]
-    },
-    {
-      "type": "select",
-      "id": "mega_menu_width",
-      "label": "t:sections.header.settings.mega_menu_width.label",
-      "default": "auto",
-      "options": [
-        { "value": "auto", "label": "t:sections.header.settings.mega_menu_width.options__1.label" },
-        { "value": "full", "label": "t:sections.header.settings.mega_menu_width.options__2.label" }
       ]
     }
   ],
