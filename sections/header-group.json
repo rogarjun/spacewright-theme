@@ -89,7 +89,7 @@
         "simple_link_TnPLke"
       ],
       "settings": {
-        "logo_position": "middle-center",
+        "logo_position": "middle-left",
         "mobile_logo_position": "center",
         "menu": "main-menu",
         "menu_type_desktop": "mega",
@@ -100,12 +100,11 @@
         "enable_country_selector": true,
         "enable_language_selector": true,
         "enable_customer_avatar": true,
-        "margin_bottom": 0,
+        "margin_bottom": 8,
         "padding_top": 8,
-        "mega_panel_bg_image": "shopify://shop_images/Hero_Image_5.png",
         "mega_panel_bg_color": "rgba(0,0,0,0)",
         "mega_panel_bg_opacity": 0.6,
-        "padding_bottom": 8
+        "padding_bottom": 0
       }
     }
   },
