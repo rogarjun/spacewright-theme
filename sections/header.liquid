@@ -1,11 +1,8 @@
 {%- liquid
   assign layout_mode = 'left'
-  if section.settings.logo_position == 'top-center' or section.settings.logo_position == 'middle-center'
+  if section.settings.logo_position == 'middle-center'
     assign layout_mode = 'center'
   endif
-
-  assign total_blocks = section.blocks.size
-  assign left_count = total_blocks | divided_by: 2
 -%}
 
 {%- comment -%}
@@ -35,26 +32,6 @@
   {%- if request.page_type == 'index' -%}</h1>{%- endif -%}
 {%- endcapture -%}
 
-{%- capture desktop_nav_left -%}
-  <ul class="nav nav--left" role="list">
-    {%- for block in section.blocks -%}
-      {%- if forloop.index0 < left_count -%}
-  {% render "header-nav-block", block: block %}
-      {%- endif -%}
-    {%- endfor -%}
-  </ul>
-{%- endcapture -%}
-
-{%- capture desktop_nav_right -%}
-  <ul class="nav nav--right" role="list">
-    {%- for block in section.blocks -%}
-      {%- if forloop.index0 >= left_count -%}
-  {% render "header-nav-block", block: block %}
-      {%- endif -%}
-    {%- endfor -%}
-  </ul>
-{%- endcapture -%}
-
 {%- capture desktop_nav_all -%}
   <ul class="nav nav--all" role="list">
     {%- for block in section.blocks -%}
@@ -70,7 +47,7 @@
 
 <{{ header_tag }} class="section-header">
   <header
-    class="header-wrapper color-{{ section.settings.color_scheme }} gradient"
+    class="header-wrapper header page-width header--{{ section.settings.logo_position }} color-{{ section.settings.color_scheme }} gradient"
     style="
       --nav-font-size: {{ section.settings.nav_font_size }}px;
       --nav-font-weight: {{ section.settings.nav_font_weight }};
@@ -78,6 +55,9 @@
       --mega-title-weight: {{ section.settings.mega_title_font_weight }};
       --mega-bg-color: {% if section.settings.mega_panel_bg_color != blank %}rgba({{ section.settings.mega_panel_bg_color | color_to_rgb | remove: 'rgb(' | remove: ')' }}, {{ section.settings.mega_panel_bg_opacity | default: 0 }}){% else %}transparent{% endif %};
       {% if section.settings.mega_panel_bg_image != blank %}--mega-bg-image: url({{ section.settings.mega_panel_bg_image | image_url: width: 2000 }});{% else %}--mega-bg-image: none;{% endif %}
+      --header-vertical-padding: {{ section.settings.vertical_padding }}px;
+      {% if section.settings.nav_link_color != blank %}--nav-link-color: {{ section.settings.nav_link_color }};{% endif %}
+      {% if section.settings.mega_text_color != blank %}--mega-text-color: {{ section.settings.mega_text_color }};{% endif %}
     "
   >
     {% if section.settings.nav_font != blank and section.settings.nav_font.family != settings.type_header_font.family %}
@@ -85,167 +65,164 @@
         {{ section.settings.nav_font | font_face: font_display: 'swap' }}
       </style>
     {% endif %}
-    <div
-      class="header page-width header--{{ section.settings.logo_position }}"
-    >
-      {%- if layout_mode == 'center' -%}
-        <div class="header__side header__side--left">{{ desktop_nav_left }}</div>
-        <div class="header__center">{{ header_logo }}</div>
-        <div class="header__side header__side--right">
-          {{ desktop_nav_right }}
-          <div class="header__icons">
-            {% render 'header-search', input_id: 'Search-In-Modal' %}
-            {%- if shop.customer_accounts_enabled -%}
-              <a
-                href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-                class="header__icon link focus-inset"
-                rel="nofollow"
-                aria-label="{{ 'customer.account_fallback' | t }}"
-              >
-                <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
-              </a>
-            {%- endif -%}
+    {%- if layout_mode == 'center' -%}
+      <!-- Middle center: nav left, logo centered, icons right -->
+      <div class="header__side header__side--left">
+        {{ desktop_nav_all }}
+      </div>
+      <div class="header__center">{{ header_logo }}</div>
+      <div class="header__side header__side--right">
+        <div class="header__icons">
+          {% render 'header-search', input_id: 'Search-In-Modal' %}
+          {%- if shop.customer_accounts_enabled -%}
             <a
-              href="{{ routes.cart_url }}"
+              href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
               class="header__icon link focus-inset"
-              id="cart-icon-bubble"
-              aria-label="{{ 'templates.cart.cart' | t }}"
+              rel="nofollow"
+              aria-label="{{ 'customer.account_fallback' | t }}"
             >
-              {% if cart == empty %}
-                <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
-              {% else %}
-                <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
-                <span class="cart-count-bubble" aria-hidden="true">{{ cart.item_count }}</span>
-              {% endif %}
+              <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
             </a>
-          </div>
+          {%- endif -%}
+          <a
+            href="{{ routes.cart_url }}"
+            class="header__icon link focus-inset"
+            id="cart-icon-bubble"
+            aria-label="{{ 'templates.cart.cart' | t }}"
+          >
+            {% if cart == empty %}
+              <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
+            {% else %}
+              <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+              <span class="cart-count-bubble" aria-hidden="true">{{ cart.item_count }}</span>
+            {% endif %}
+          </a>
         </div>
-      {%- elsif layout_mode == 'left' -%}
-        <div class="header__side header__side--left header__group">
-          {{ header_logo }}
-          {{ desktop_nav_all }}
-        </div>
-        <div class="header__side header__side--right">
-          <div class="header__icons">
-            {% render 'header-search', input_id: 'Search-In-Modal' %}
-            {%- if shop.customer_accounts_enabled -%}
-              <a
-                href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
-                class="header__icon link focus-inset"
-                rel="nofollow"
-                aria-label="{{ 'customer.account_fallback' | t }}"
-              >
-                <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
-              </a>
-            {%- endif -%}
-            <a
-              href="{{ routes.cart_url }}"
-              class="header__icon link focus-inset"
-              id="cart-icon-bubble"
-              aria-label="{{ 'templates.cart.cart' | t }}"
-            >
-              {% if cart == empty %}
-                <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
-              {% else %}
-                <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
-                <span class="cart-count-bubble" aria-hidden="true">{{ cart.item_count }}</span>
-              {% endif %}
-            </a>
-          </div>
-        </div>
-      {%- endif -%}
-
-      <!-- Mobile placeholder -->
-      <div class="header-mobile small-only color-{{ section.settings.mobile_drawer_color_scheme }}">
-        <button
-          class="hamburger"
-          aria-controls="mobile-drawer"
-          aria-expanded="false"
-          aria-label="{{ 'sections.header.menu' | t }}"
+      </div>
+    {%- else -%}
+      <!-- Middle left: logo left, nav centered in remaining space, icons right -->
+      <div class="header__logo-wrap">{{ header_logo }}</div>
+      <div class="header__nav-wrap">
+        {{ desktop_nav_all }}
+      </div>
+      <div class="header__icons">
+        {% render 'header-search', input_id: 'Search-In-Modal' %}
+        {%- if shop.customer_accounts_enabled -%}
+          <a
+            href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
+            class="header__icon link focus-inset"
+            rel="nofollow"
+            aria-label="{{ 'customer.account_fallback' | t }}"
+          >
+            <span class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
+          </a>
+        {%- endif -%}
+        <a
+          href="{{ routes.cart_url }}"
+          class="header__icon link focus-inset"
+          id="cart-icon-bubble"
+          aria-label="{{ 'templates.cart.cart' | t }}"
         >
-          <span class="hamburger__bar" aria-hidden="true"></span>
-          <span class="hamburger__bar" aria-hidden="true"></span>
-          <span class="hamburger__bar" aria-hidden="true"></span>
-        </button>
-        <div class="header-mobile__logo">{{ header_logo }}</div>
-        <div id="mobile-drawer" class="mobile-drawer" hidden>
-          <ul class="mobile-nav" role="list">
-            {%- for block in section.blocks -%}
-              {%- if block.type == 'simple_link' -%}
-                <li class="mobile-nav__item">
-                  <a class="mobile-nav__link" href="{{ block.settings.link | default: '#' }}">
-                    {{- block.settings.label | escape -}}
-                  </a>
-                </li>
-              {%- elsif block.type == 'mega_menu' -%}
-                <li class="mobile-nav__item">
-                  <details>
-                    <summary class="mobile-nav__link">{{ block.settings.label | escape }}</summary>
-                    <ul class="mobile-subnav" role="list">
-                      {%- assign c1 = block.settings.link_column_1 -%}
-                      {%- assign c2 = block.settings.link_column_2 -%}
-                      {%- assign c3 = block.settings.link_column_3 -%}
-                      {%- if c1 != blank and linklists[c1] -%}
-                        <li class="mobile-subnav__group">
-                          {%- if linklists[c1].title != blank -%}
-                            <p class="mobile-subnav__title">
-                              <a class="mobile-subnav__link" href="{{ linklists[c1].url }}">
-                                {{- linklists[c1].title | escape -}}
-                              </a>
-                            </p>
-                          {%- endif -%}
-                          <ul role="list">
-                            {%- for l in linklists[c1].links -%}
-                              <li>
-                                <a class="mobile-subnav__link" href="{{ l.url }}">{{ l.title | escape }}</a>
-                              </li>
-                            {%- endfor -%}
-                          </ul>
-                        </li>
-                      {%- endif -%}
-                      {%- if c2 != blank and linklists[c2] -%}
-                        <li class="mobile-subnav__group">
-                          {%- if linklists[c2].title != blank -%}
-                            <p class="mobile-subnav__title">
-                              <a class="mobile-subnav__link" href="{{ linklists[c2].url }}">
-                                {{- linklists[c2].title | escape -}}
-                              </a>
-                            </p>
-                          {%- endif -%}
-                          <ul role="list">
-                            {%- for l in linklists[c2].links -%}
-                              <li>
-                                <a class="mobile-subnav__link" href="{{ l.url }}">{{ l.title | escape }}</a>
-                              </li>
-                            {%- endfor -%}
-                          </ul>
-                        </li>
-                      {%- endif -%}
-                      {%- if c3 != blank and linklists[c3] -%}
-                        <li class="mobile-subnav__group">
-                          {%- if linklists[c3].title != blank -%}
-                            <p class="mobile-subnav__title">
-                              <a class="mobile-subnav__link" href="{{ linklists[c3].url }}">
-                                {{- linklists[c3].title | escape -}}
-                              </a>
-                            </p>
-                          {%- endif -%}
-                          <ul role="list">
-                            {%- for l in linklists[c3].links -%}
-                              <li>
-                                <a class="mobile-subnav__link" href="{{ l.url }}">{{ l.title | escape }}</a>
-                              </li>
-                            {%- endfor -%}
-                          </ul>
-                        </li>
-                      {%- endif -%}
-                    </ul>
-                  </details>
-                </li>
-              {%- endif -%}
-            {%- endfor -%}
-          </ul>
-        </div>
+          {% if cart == empty %}
+            <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
+          {% else %}
+            <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
+            <span class="cart-count-bubble" aria-hidden="true">{{ cart.item_count }}</span>
+          {% endif %}
+        </a>
+      </div>
+    {%- endif -%}
+
+    <!-- Mobile placeholder -->
+    <div class="header-mobile small-only color-{{ section.settings.mobile_drawer_color_scheme }}">
+      <button
+        class="hamburger"
+        aria-controls="mobile-drawer"
+        aria-expanded="false"
+        aria-label="{{ 'sections.header.menu' | t }}"
+      >
+        <span class="hamburger__bar" aria-hidden="true"></span>
+        <span class="hamburger__bar" aria-hidden="true"></span>
+        <span class="hamburger__bar" aria-hidden="true"></span>
+      </button>
+      <div class="header-mobile__logo">{{ header_logo }}</div>
+      <div id="mobile-drawer" class="mobile-drawer" hidden>
+        <ul class="mobile-nav" role="list">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'simple_link' -%}
+              <li class="mobile-nav__item">
+                <a class="mobile-nav__link" href="{{ block.settings.link | default: '#' }}">
+                  {{- block.settings.label | escape -}}
+                </a>
+              </li>
+            {%- elsif block.type == 'mega_menu' -%}
+              <li class="mobile-nav__item">
+                <details>
+                  <summary class="mobile-nav__link">{{ block.settings.label | escape }}</summary>
+                  <ul class="mobile-subnav" role="list">
+                    {%- assign c1 = block.settings.link_column_1 -%}
+                    {%- assign c2 = block.settings.link_column_2 -%}
+                    {%- assign c3 = block.settings.link_column_3 -%}
+                    {%- if c1 != blank and linklists[c1] -%}
+                      <li class="mobile-subnav__group">
+                        {%- if linklists[c1].title != blank -%}
+                          <p class="mobile-subnav__title">
+                            <a class="mobile-subnav__link" href="{{ linklists[c1].url }}">
+                              {{- linklists[c1].title | escape -}}
+                            </a>
+                          </p>
+                        {%- endif -%}
+                        <ul role="list">
+                          {%- for l in linklists[c1].links -%}
+                            <li>
+                              <a class="mobile-subnav__link" href="{{ l.url }}">{{ l.title | escape }}</a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      </li>
+                    {%- endif -%}
+                    {%- if c2 != blank and linklists[c2] -%}
+                      <li class="mobile-subnav__group">
+                        {%- if linklists[c2].title != blank -%}
+                          <p class="mobile-subnav__title">
+                            <a class="mobile-subnav__link" href="{{ linklists[c2].url }}">
+                              {{- linklists[c2].title | escape -}}
+                            </a>
+                          </p>
+                        {%- endif -%}
+                        <ul role="list">
+                          {%- for l in linklists[c2].links -%}
+                            <li>
+                              <a class="mobile-subnav__link" href="{{ l.url }}">{{ l.title | escape }}</a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      </li>
+                    {%- endif -%}
+                    {%- if c3 != blank and linklists[c3] -%}
+                      <li class="mobile-subnav__group">
+                        {%- if linklists[c3].title != blank -%}
+                          <p class="mobile-subnav__title">
+                            <a class="mobile-subnav__link" href="{{ linklists[c3].url }}">
+                              {{- linklists[c3].title | escape -}}
+                            </a>
+                          </p>
+                        {%- endif -%}
+                        <ul role="list">
+                          {%- for l in linklists[c3].links -%}
+                            <li>
+                              <a class="mobile-subnav__link" href="{{ l.url }}">{{ l.title | escape }}</a>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+                      </li>
+                    {%- endif -%}
+                  </ul>
+                </details>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
       </div>
     </div>
   </header>
@@ -261,35 +238,51 @@
     position: relative; /* anchor for full-width mega panel */
   }
   .header {
-    display: grid;
-    grid-template-columns: 1fr;
-    padding: 16px 16px;
+    display: flex;
+    align-items: center;
+    padding: var(--header-vertical-padding, 16px) 16px;
+  }
+  /* Middle-left layout */
+  .header--middle-left {
+    justify-content: space-between;
+  }
+  .header--middle-left .header__logo-wrap {
+    display: flex;
     align-items: center;
   }
-  .header--top-center,
-  .header--middle-center {
-    grid-template-columns: 1fr auto 1fr;
+  .header--middle-left .header__nav-wrap {
+    margin-left: 32px;
+    margin-right: auto; /* push icons to far right */
   }
-  .header--top-left,
-  .header--middle-left {
-    grid-template-columns: 1fr auto;
-  }
-  .header__side {
+  .header--middle-left .header__icons {
     display: flex;
     align-items: center;
     gap: 2rem;
   }
-  .header__side--right {
-    justify-content: flex-end;
-    gap: 2rem;
+
+  /* Middle-center layout */
+  .header--middle-center {
+    justify-content: space-between;
   }
-  .header__center {
+  .header--middle-center .header__side {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex: 1; /* equal space left/right */
+  }
+  .header--middle-center .header__center {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex: 0 0 auto;
   }
-  .header__group {
-    gap: 2rem;
+  .header--middle-center .header__side--left {
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .header--middle-center .header__side--right {
+    justify-content: flex-end;
+    text-align: right;
   }
 
   /* Logo */
@@ -322,25 +315,25 @@
     align-items: center;
     gap: 0.4rem;
     text-decoration: none;
-    color: currentColor;
+    color: var(--nav-link-color, currentColor) !important;
     font-size: var(--nav-font-size, 16px);
     font-weight: var(--nav-font-weight, 400);
     padding: 0.6rem 0; /* vertical hit area */
     font-family: var(--font-navigation, var(--font-heading-family));
   }
   .nav-link:visited {
-    color: currentColor;
+    color: var(--nav-link-color, currentColor) !important;
   }
   .nav-link:hover,
   .nav-link:focus {
-    color: currentColor;
+    color: var(--nav-link-color, currentColor) !important;
   }
   .mega-panel {
     position: absolute;
     left: 0;
     right: 0; /* full width */
     top: 100%;
-    color: var(--color-foreground);
+    color: var(--mega-text-color, var(--color-foreground));
     z-index: 15;
     border-radius: 0;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
@@ -363,7 +356,7 @@
   }
   .mega-panel a,
   .mega-panel a:visited {
-    color: currentColor;
+    color: var(--mega-text-color, var(--color-foreground)) !important;
   }
   .mega-panel__inner {
     width: 100%;
@@ -379,6 +372,7 @@
     font-weight: var(--mega-title-weight, 700);
     margin: 0 0 0.6rem;
     font-size: var(--mega-title-size, 16px);
+    color: var(--mega-text-color, var(--color-foreground)) !important;
   }
   .mega-col__list {
     list-style: none;
@@ -393,11 +387,11 @@
   }
   .mega-col__link {
     text-decoration: none;
-    color: currentColor;
+    color: var(--mega-text-color, var(--color-foreground)) !important;
     padding: 0.25rem 0;
   }
   .mega-col__link:visited {
-    color: currentColor;
+    color: var(--mega-text-color, var(--color-foreground)) !important;
   }
 
   /* Hide caret for mega menu */
@@ -568,8 +562,6 @@
       "label": "t:sections.header.settings.logo_position.label",
       "default": "middle-left",
       "options": [
-        { "value": "top-left", "label": "t:sections.header.settings.logo_position.options__2.label" },
-        { "value": "top-center", "label": "t:sections.header.settings.logo_position.options__3.label" },
         { "value": "middle-left", "label": "t:sections.header.settings.logo_position.options__1.label" },
         { "value": "middle-center", "label": "t:sections.header.settings.logo_position.options__4.label" }
       ]
@@ -596,6 +588,16 @@
         { "value": "none", "label": "t:sections.header.settings.sticky_header_type.options__1.label" },
         { "value": "always", "label": "t:sections.header.settings.sticky_header_type.options__3.label" }
       ]
+    },
+    {
+      "type": "range",
+      "id": "vertical_padding",
+      "label": "Vertical Padding",
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
     },
     {
       "type": "header",
@@ -635,6 +637,11 @@
       "default": 16
     },
     {
+      "type": "color",
+      "id": "nav_link_color",
+      "label": "Navigation Link Color"
+    },
+    {
       "type": "font_picker",
       "id": "nav_font",
       "label": "t:sections.header.settings.nav_font.label",
@@ -670,6 +677,11 @@
         { "value": "400", "label": "t:sections.header.settings.mega_title_font_weight.options__1.label" },
         { "value": "700", "label": "t:sections.header.settings.mega_title_font_weight.options__2.label" }
       ]
+    },
+    {
+      "type": "color",
+      "id": "mega_text_color",
+      "label": "Mega Menu Text Color"
     }
   ],
   "blocks": [
